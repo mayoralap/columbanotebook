@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Columba Notebook – Planes de Suscripción</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
   <style>
     :root {
       --color-primary: #1a73e8;
@@ -32,6 +31,7 @@
       box-sizing: border-box;
     }
 
+    /* Tarjeta contenedor principal */
     .main-card {
       background: #ffffff;
       border-radius: 12px;
@@ -44,6 +44,9 @@
       box-sizing: border-box;
     }
 
+    /* ===========================
+   HEADER (ESCRITORIO)
+   =========================== */
     .header-flexible {
       display: flex;
       align-items: center;
@@ -91,74 +94,42 @@
       line-height: 1.5;
     }
 
+    /* Contenedor del botón derecho */
     .header-right-action {
       margin-left: auto;
     }
 
+    /* Botón Premium */
     .btn-premium {
-      position: relative;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 18px;
-      background: linear-gradient(135deg, #ffcc00, #ff9900);
-      color: #222;
-      font-weight: 700;
-      border-radius: 8px;
       text-decoration: none;
-      overflow: hidden;
-      box-shadow: 0 0 12px rgba(255, 200, 0, 0.6);
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      background: linear-gradient(135deg, #FFB75E 0%, #ED8F03 100%);
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(237, 143, 3, 0.3);
     }
 
     .btn-premium:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 18px rgba(255, 200, 0, 0.9);
-    }
-
-    .btn-premium::before,
-    .btn-premium::after {
-      content: "✦";
-      position: absolute;
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 12px;
-      animation: sparkle 1.8s infinite ease-in-out;
-      pointer-events: none;
-    }
-
-    .btn-premium::before {
-      top: 6px;
-      left: 10px;
-      animation-delay: 0s;
-    }
-
-    .btn-premium::after {
-      bottom: 6px;
-      right: 12px;
-      animation-delay: 0.9s;
-    }
-
-    @keyframes sparkle {
-      0% {
-        opacity: 0;
-        transform: scale(0.5) rotate(0deg);
-      }
-
-      50% {
-        opacity: 1;
-        transform: scale(1.2) rotate(20deg);
-      }
-
-      100% {
-        opacity: 0;
-        transform: scale(0.5) rotate(0deg);
-      }
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(237, 143, 3, 0.4);
+      background: linear-gradient(135deg, #fcae4a 0%, #e08703 100%);
     }
 
     .hidden {
       display: none !important;
     }
 
+    /* ===========================
+   GRID DE PLANES (ESCRITORIO)
+   =========================== */
     .pricing-container {
       width: 100%;
       display: grid;
@@ -167,6 +138,9 @@
       box-sizing: border-box;
     }
 
+    /* ===========================
+   RESPONSIVE (TABLET + MÓVIL)
+   =========================== */
     @media (max-width: 750px) {
       .header-flexible {
         flex-direction: column;
@@ -213,6 +187,9 @@
       }
     }
 
+    /* ===========================
+   TARJETAS INDIVIDUALES
+   =========================== */
     .card {
       background: #ffffff;
       border-radius: 12px;
@@ -280,6 +257,7 @@
       filter: grayscale(100%);
     }
 
+    /* Caja de Registro */
     .action-box {
       background: #ffffff;
       padding: 40px 24px;
@@ -334,6 +312,68 @@
       color: #5f6368;
     }
 
+    /* BOTÓN PREMIUM CON EFECTO DE ESTRELLAS */
+    .btn-premium {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: linear-gradient(135deg, #ffcc00, #ff9900);
+      color: #222;
+      font-weight: 700;
+      border-radius: 8px;
+      text-decoration: none;
+      overflow: hidden;
+      box-shadow: 0 0 12px rgba(255, 200, 0, 0.6);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-premium:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 18px rgba(255, 200, 0, 0.9);
+    }
+
+    .btn-premium::before,
+    .btn-premium::after {
+      content: "✦";
+      position: absolute;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 12px;
+      animation: sparkle 1.8s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    .btn-premium::before {
+      top: 6px;
+      left: 10px;
+      animation-delay: 0s;
+    }
+
+    .btn-premium::after {
+      bottom: 6px;
+      right: 12px;
+      animation-delay: 0.9s;
+    }
+
+    @keyframes sparkle {
+      0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(0deg);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(20deg);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(0.5) rotate(0deg);
+      }
+    }
+
+    /* Tooltip base */
     .tooltip {
       position: absolute;
       z-index: 1080;
@@ -388,16 +428,6 @@
       border-width: 0.4rem 0.4rem 0 0.4rem;
       border-color: #000 transparent transparent transparent;
     }
-
-    .btn-login {
-      background: #4285F4;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-    }
   </style>
 </head>
 
@@ -406,12 +436,15 @@
   <div class="main-card">
     <div class="header-flexible" id="plansHeader">
       <div class="logo-card">
-        <img src="https://drive.google.com/thumbnail?id=1GQvjfz-HN7byoeHQqhPsrc9EngvRiaXV" alt="Logo Columba Notebook" class="header-logo">
+        <img src="https://drive.google.com/thumbnail?id=1GQvjfz-HN7byoeHQqhPsrc9EngvRiaXV" alt="Logo Columba Notebook"
+          class="header-logo">
       </div>
 
       <div class="header-text-centered">
         <h1 class="titulo-pagina">Elige tu plan en Columba Notebook</h1>
-        <p class="text-muted">Selecciona el nivel de acceso que mejor se adapte a tus necesidades.</p>
+        <p class="text-muted">
+          Selecciona el nivel de acceso que mejor se adapte a tus necesidades.
+        </p>
       </div>
 
       <div class="header-right-action" data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -431,14 +464,16 @@
     <div id="registrationActionBox" class="action-box"></div>
 
     <div class="pricing-container" id="plansContainer">
-      <!-- Básica -->
       <div class="card plan-card">
         <div class="card-title">Básica
-          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye registros básicos de ejemplares, control inicial del palomar y exportación en PDF."></i>
+          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top"
+            title="Incluye registros básicos de ejemplares, control inicial del palomar y exportación en PDF. Ideal para comenzar sin complejidad."></i>
         </div>
         <div class="card-subtitle">Funciones esenciales.</div>
-        <div class="card-body">Organización básica de ejemplares, registros fundamentales y exportación inicial en PDF.
-          Ideal para comenzar el control general del palomar.</div>
+        <div class="card-body">
+          Organización básica de ejemplares, registros fundamentales y exportación inicial en PDF. Ideal para comenzar
+          el control general del palomar.
+        </div>
         <div class="card-footer">
           <stripe-buy-button buy-button-id="buy_btn_1TiMvDAMpjQA7o9hq0kBlyXu"
             publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD">
@@ -446,14 +481,16 @@
         </div>
       </div>
 
-      <!-- Core -->
       <div class="card plan-card">
         <div class="card-title">Core
-          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Agrega cálculo automático de edades, informes ampliados y control individual del ejemplar."></i>
+          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top"
+            title="Agrega cálculo automático de edades, informes ampliados y control individual del ejemplar. Ideal para manejo reproductivo básico."></i>
         </div>
         <div class="card-subtitle">Gestión individual.</div>
-        <div class="card-body">Control completo de ejemplares, seguimiento reproductivo,
-          <strong>cálculo automático de edades</strong>, informes ampliados y exportación en PDF con más detalle.</div>
+        <div class="card-body">
+          Control completo de ejemplares, seguimiento reproductivo, <strong>cálculo automático de edades</strong>,
+          informes ampliados y exportación en PDF con más detalle para una gestión más precisa.
+        </div>
         <div class="card-footer">
           <stripe-buy-button buy-button-id="buy_btn_1TiP1MAMpjQA7o9hXjPwBKMN"
             publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD">
@@ -461,16 +498,18 @@
         </div>
       </div>
 
-      <!-- Plus -->
       <div class="card plan-card">
         <div class="card-title">Plus
-          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye capturas por ejemplar y por palomero, informes más profundos y cruces inteligentes."></i>
+          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top"
+            title="Incluye capturas por ejemplar y por palomero, informes más profundos y cruces inteligentes basados en coincidencias genéticas. Ideal para análisis reproductivo avanzado."></i>
         </div>
         <div class="card-subtitle">Análisis avanzado.</div>
-        <div class="card-body">Informes profundos de reproducción,
-          <strong>capturas por ejemplar y por palomero</strong>,
-          <strong>cruces inteligentes basados en coincidencias genéticas</strong>, análisis ampliado y exportación
-          profesional.</div>
+        <div class="card-body">
+          Informes profundos de reproducción, <strong>capturas por ejemplar y por palomero</strong>, <strong>cruces
+            inteligentes basados en coincidencias genéticas</strong>, análisis ampliado y exportación profesional en
+          PDF
+          para decisiones más estratégicas.
+        </div>
         <div class="card-footer">
           <stripe-buy-button buy-button-id="buy_btn_1TiP3LAMpjQA7o9hyonnFgTt"
             publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD">
@@ -478,116 +517,114 @@
         </div>
       </div>
 
-      <!-- Pro+ -->
       <div class="card featured plan-card">
         <div class="card-title">Pro+
-          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye Pedigrí inteligente, informes anuales completos, almacenamiento ampliado."></i>
+          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top"
+            title="Incluye Pedigrí inteligente, informes anuales completos, almacenamiento ampliado y exportación avanzada. Ideal para control total del palomar a nivel genealógico y estratégico."></i>
         </div>
         <div class="card-subtitle">Rendimiento máximo.</div>
-        <div class="card-body">Automatización avanzada, almacenamiento ampliado y herramientas premium como
-          <strong>Pedigrí inteligente</strong>, <strong>informes anuales completos del palomar</strong>, exportación
-          avanzada en PDF y un control total.</div>
+        <div class="card-body">
+          Automatización avanzada, almacenamiento ampliado y herramientas premium como <strong>Pedigrí
+            inteligente</strong>, <strong>informes anuales completos del palomar</strong>, exportación avanzada en PDF
+          y
+          un control total a nivel reproductivo, genealógico y estratégico.
+        </div>
         <div class="card-footer">
           <stripe-buy-button buy-button-id="buy_btn_1TiP5TAMpjQA7o9hIIqHE48m"
             publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD">
           </stripe-buy-button>
         </div>
       </div>
+
     </div>
   </div>
 
   <script async src="https://js.stripe.com/v3/buy-button.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script type="module">
-    // 1. Importaciones necesarias
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-      import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+ <script>
+    // =========================================================================
+    // INFRAESTRUCTURA SEGURA DE CONEXIÓN
+    // =========================================================================
+    function getEndpoint() {
+        const p1 = "https://docs.google.com/spreadsheets/d/";
+        const p2 = "1Vf6YTKbGRR2LsEJ2JKJdrCQLY9o57z5Vh9O7IvJ21qE";
+        const p3 = "/gviz/tq?tqx=out:csv&sheet=Auth";
+        return p1 + p2 + p3;
+    }
 
-      // 2. Configuración
-      const firebaseConfig = {
-        apiKey: "AIzaSyAzHnH4uTgJPPrZntzTwWm_dccQrBBBfa8",
-        authDomain: "columbanotebook.firebaseapp.com",
-        projectId: "columbanotebook",
-        storageBucket: "columbanotebook.appspot.com",
-        messagingSenderId: "839165918275",
-        appId: "1:839165918275:web:cf8c703391dcc9068fc8f6"
-      };
+    function abrirVentanaRegistro() {
+        window.open('https://forms.gle/FnmNY8HFqmhM2JyV8', 'registroPopup', 'width=auto,height=auto,resizable=yes,scrollbars=yes');
+    }
 
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
-
-      window.abrirVentanaRegistro = function() {
-        window.open('https://forms.gle/FnmNY8HFqmhM2JyV8', '_blank', 'width=auto,height=auto,resizable=yes,scrollbars=yes');
-      };
-
-      // 3. Validación contra Firestore
-      async function validarAccesoFirestore(email) {
-        if (!email) return "not_registered";
-        try {
-          const q = query(collection(db, "usuarios_autorizados"), where("email", "==", email.toLowerCase().trim()));
-          const querySnapshot = await getDocs(q);
-          
-          let esValido = false;
-          querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            if (data.action === "Autorizado" && data.estado === "active") {
-              esValido = true;
-            }
-          });
-          return esValido ? "active" : "registered_not_paid";
-        } catch (e) {
-          console.error("Error en Firestore: ", e);
-          return "not_registered";
-        }
-      }
-
-      // 4. Manejo de UI
-      function handleAccess(status) {
+    function handleAccess(status) {
         const cards = document.querySelectorAll(".plan-card");
         const actionBox = document.getElementById("registrationActionBox");
         const header = document.getElementById("plansHeader");
 
-        if (status !== "active") {
-          cards.forEach(c => c.classList.add("blocked"));
-          if (header) header.classList.add("hidden");
+        if (status === "not_registered") {
+            cards.forEach(c => c.classList.add("blocked"));
+            header.classList.add("hidden");
 
-          actionBox.innerHTML = `
-            <h2>Acceso Restringido</h2>
-            <p>Tu usuario no se encuentra activo o registrado en el sistema.</p>
-            <button class="btn-columba" onclick="abrirVentanaRegistro()">Regístrate ahora</button>
-          `;
-          actionBox.style.display = "block";
+            actionBox.innerHTML = `
+                <h2>Acceso restringido</h2>
+                <p>Tu correo no está verificado o tu suscripción no está activa.<br>Por favor, revisa tu estado o regístrate.</p>
+                <button class="btn-columba" onclick="abrirVentanaRegistro()">Gestionar Acceso</button>
+            `;
+            actionBox.style.display = "block";
         } else {
-          cards.forEach(c => c.classList.remove("blocked"));
-          if (header) header.classList.remove("hidden");
-          actionBox.style.display = "none";
+            cards.forEach(c => c.classList.remove("blocked"));
+            header.classList.remove("hidden");
+            actionBox.style.display = "none";
         }
-      }
+    }
 
-      // 5. Ejecución única y unificada
-      document.addEventListener("DOMContentLoaded", () => {
-        let email = localStorage.getItem('usuario_columba_session');
+    async function ejecutarVerificacionDeAcceso() {
+    const parametrosURL = new URLSearchParams(window.location.search);
+    const emailBuscado = parametrosURL.get("user");
+
+    if (!emailBuscado) {
+        handleAccess("not_registered");
+        return;
+    }
+
+    const emailLimpio = emailBuscado.trim().toLowerCase();
+    
+    try {
+        const url = `https://firestore.googleapis.com/v1/projects/columbanotebook/databases/(default)/documents/usuarios_autorizados/${emailLimpio}`;
+        const respuesta = await fetch(url);
         
-        // Si no hay en storage, revisa URL
-        if (!email) {
-          const urlParams = new URLSearchParams(window.location.search);
-          email = urlParams.get('email');
-          
-          // Si viene por URL, guardamos en storage para las próximas veces
-          if (email) {
-            localStorage.setItem('usuario_columba_session', email);
-          }
+        if (!respuesta.ok) {
+            handleAccess("not_registered"); // Correo no existe en BD
+            return;
         }
 
-        // Validamos el email encontrado
-        if (email) {
-          validarAccesoFirestore(email).then(handleAccess);
-        } else {
-          handleAccess("not_registered");
+        const data = await respuesta.json();
+        
+        // Extraemos los datos para mostrarlos al usuario
+        const estado = data.fields.estado?.stringValue;
+        const fechaVence = data.fields.fec_vence?.stringValue;
+
+        // Marcamos como registrado porque el correo existe
+        handleAccess("registered");
+        
+        // Muestra la info en un elemento de tu HTML (ej. <div id="infoSuscripcion"></div>)
+        const infoDiv = document.getElementById("infoSuscripcion");
+        if (infoDiv) {
+            infoDiv.innerHTML = `
+                <p>Estado: ${estado}</p>
+                <p>Tu suscripción vence el: ${fechaVence}</p>
+            `;
         }
-      });
-  </script>
+
+    } catch (error) {
+        handleAccess("not_registered");
+    }
+}
+
+    document.addEventListener("DOMContentLoaded", ejecutarVerificacionDeAcceso);
+</script>
+
 </body>
 
 </html>
