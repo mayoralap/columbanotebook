@@ -500,116 +500,87 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script type="module">
-    // 1. Importaciones necesarias del SDK de Firebase (Añadido getAuth)
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    // 1. Importaciones necesarias
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+      import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
-    // 2. Tu configuración
-    const firebaseConfig = {
-      apiKey: "AIzaSyAzHnH4uTgJPPrZntzTwWm_dccQrBBBfa8",
-      authDomain: "columbanotebook.firebaseapp.com",
-      projectId: "columbanotebook",
-      storageBucket: "columbanotebook.appspot.com",
-      messagingSenderId: "839165918275",
-      appId: "1:839165918275:web:cf8c703391dcc9068fc8f6"
-    };
+      // 2. Configuración
+      const firebaseConfig = {
+        apiKey: "AIzaSyAzHnH4uTgJPPrZntzTwWm_dccQrBBBfa8",
+        authDomain: "columbanotebook.firebaseapp.com",
+        projectId: "columbanotebook",
+        storageBucket: "columbanotebook.appspot.com",
+        messagingSenderId: "839165918275",
+        appId: "1:839165918275:web:cf8c703391dcc9068fc8f6"
+      };
 
-    // 3. Inicializar Firebase y Servicios
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
 
-    window.abrirVentanaRegistro = function() {
-      window.open('https://forms.gle/FnmNY8HFqmhM2JyV8', '_blank', 'width=auto,height=auto,resizable=yes,scrollbars=yes');
-    };
+      window.abrirVentanaRegistro = function() {
+        window.open('https://forms.gle/FnmNY8HFqmhM2JyV8', '_blank', 'width=auto,height=auto,resizable=yes,scrollbars=yes');
+      };
 
-    // 4. Lógica de Validación contra Firestore
-    async function validarAccesoFirestore(email) {
-      if (!email) return "not_registered";
-      
-      try {
-        const q = query(collection(db, "usuarios_autorizados"), where("email", "==", email.toLowerCase().trim()));
-        const querySnapshot = await getDocs(q);
-        
-        if (querySnapshot.empty) return "not_registered";
-        
-        let esValido = false;
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          if (data.action === "Autorizado" && data.estado === "active") {
-            esValido = true;
-          }
-        });
-        return esValido ? "active" : "registered_not_paid";
-      } catch (e) {
-        console.error("Error en Firestore: ", e);
-        return "not_registered";
+      // 3. Validación contra Firestore
+      async function validarAccesoFirestore(email) {
+        if (!email) return "not_registered";
+        try {
+          const q = query(collection(db, "usuarios_autorizados"), where("email", "==", email.toLowerCase().trim()));
+          const querySnapshot = await getDocs(q);
+          
+          let esValido = false;
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            if (data.action === "Autorizado" && data.estado === "active") {
+              esValido = true;
+            }
+          });
+          return esValido ? "active" : "registered_not_paid";
+        } catch (e) {
+          console.error("Error en Firestore: ", e);
+          return "not_registered";
+        }
       }
-    }
 
-    // 5. Manejo de Interfaz de Usuario
-    function handleAccess(status) {
-      const cards = document.querySelectorAll(".plan-card");
-      const actionBox = document.getElementById("registrationActionBox");
-      const header = document.getElementById("plansHeader");
+      // 4. Manejo de UI
+      function handleAccess(status) {
+        const cards = document.querySelectorAll(".plan-card");
+        const actionBox = document.getElementById("registrationActionBox");
+        const header = document.getElementById("plansHeader");
 
-      if (status !== "active") {
-        cards.forEach(c => c.classList.add("blocked"));
-        if (header) header.classList.add("hidden");
+        if (status !== "active") {
+          cards.forEach(c => c.classList.add("blocked"));
+          if (header) header.classList.add("hidden");
 
-        actionBox.innerHTML = `
-          <h2>Acceso Restringido</h2>
-          <p>Tu usuario no se encuentra activo o registrado en el sistema.<br>Si eres nuevo, inicia tu registro ahora.</p>
-          <button class="btn-columba" onclick="abrirVentanaRegistro()">Regístrate ahora</button>
-          <div class="new-tab-info">Se abrirá en una nueva pestaña</div>
-        `;
-        actionBox.style.display = "block";
-      } else {
-        cards.forEach(c => c.classList.remove("blocked"));
-        if (header) header.classList.remove("hidden");
-        actionBox.style.display = "none";
+          actionBox.innerHTML = `
+            <h2>Acceso Restringido</h2>
+            <p>Tu usuario no se encuentra activo o registrado en el sistema.</p>
+            <button class="btn-columba" onclick="abrirVentanaRegistro()">Regístrate ahora</button>
+          `;
+          actionBox.style.display = "block";
+        } else {
+          cards.forEach(c => c.classList.remove("blocked"));
+          if (header) header.classList.remove("hidden");
+          actionBox.style.display = "none";
+        }
       }
-    }
 
-    // 6. Lógica de Control Dinámico Basada en Sesión Activa (CORREGIDO)
-    document.addEventListener("DOMContentLoaded", () => {
-      // Primero intenta buscar por parámetro de URL por compatibilidad de pruebas
-      const urlParams = new URLSearchParams(window.location.search);
-      const emailParam = urlParams.get('email');
-
-      if (emailParam) {
-        validarAccesoFirestore(emailParam).then(handleAccess);
-      } else {
-        // Si no hay parámetro, escucha en tiempo real quién está logueado en el navegador
-        onAuthStateChanged(auth, (user) => {
-          if (user && user.email) {
-            console.log("Usuario detectado automáticamente:", user.email);
-            validarAccesoFirestore(user.email).then(handleAccess);
-          } else {
-            console.log("No hay sesión activa detectada.");
-            handleAccess("not_registered");
-          }
-        });
-      }
-    });
-     // 7. Ejecución al cargar: Detecta si el usuario ya inició sesión previamente
-          document.addEventListener("DOMContentLoaded", () => {
-          // Intentamos obtener el email del almacenamiento local
-          let email = localStorage.getItem('usuario_columba_session');
+      // 5. Ejecución única y unificada
+      document.addEventListener("DOMContentLoaded", () => {
+        let email = localStorage.getItem('usuario_columba_session');
         
-        // Si no hay nada, revisamos si viene por URL (como respaldo)
+        // Si no hay en storage, revisa URL
         if (!email) {
           const urlParams = new URLSearchParams(window.location.search);
           email = urlParams.get('email');
           
-          // Si viene por URL, lo guardamos para el futuro
+          // Si viene por URL, guardamos en storage para las próximas veces
           if (email) {
             localStorage.setItem('usuario_columba_session', email);
           }
         }
 
-        // Si tenemos un email, validamos contra Firestore
+        // Validamos el email encontrado
         if (email) {
           validarAccesoFirestore(email).then(handleAccess);
         } else {
