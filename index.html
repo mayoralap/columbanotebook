@@ -45,8 +45,8 @@
     }
 
     /* ===========================
-   HEADER (ESCRITORIO)
-   =========================== */
+       HEADER (ESCRITORIO)
+       =========================== */
     .header-flexible {
       display: flex;
       align-items: center;
@@ -99,37 +99,13 @@
       margin-left: auto;
     }
 
-    /* Botón Premium */
-    .btn-premium {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      background: linear-gradient(135deg, #FFB75E 0%, #ED8F03 100%);
-      color: #ffffff;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 1rem;
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 10px rgba(237, 143, 3, 0.3);
-    }
-
-    .btn-premium:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(237, 143, 3, 0.4);
-      background: linear-gradient(135deg, #fcae4a 0%, #e08703 100%);
-    }
-
     .hidden {
       display: none !important;
     }
 
     /* ===========================
-   GRID DE PLANES (ESCRITORIO)
-   =========================== */
+       GRID DE PLANES (ESCRITORIO)
+       =========================== */
     .pricing-container {
       width: 100%;
       display: grid;
@@ -139,8 +115,8 @@
     }
 
     /* ===========================
-   RESPONSIVE (TABLET + MÓVIL)
-   =========================== */
+       RESPONSIVE (TABLET + MÓVIL)
+       =========================== */
     @media (max-width: 750px) {
       .header-flexible {
         flex-direction: column;
@@ -188,8 +164,8 @@
     }
 
     /* ===========================
-   TARJETAS INDIVIDUALES
-   =========================== */
+       TARJETAS INDIVIDUALES
+       =========================== */
     .card {
       background: #ffffff;
       border-radius: 12px;
@@ -252,9 +228,9 @@
     }
 
     .blocked {
-      opacity: 0.35;
+      opacity: 0.40;
       pointer-events: none;
-      filter: grayscale(100%);
+      filter: grayscale(80%);
     }
 
     /* Caja de Registro */
@@ -302,14 +278,16 @@
       background-color: var(--color-primary-hover);
     }
 
-    .new-tab-info {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 16px;
-      font-size: 0.85rem;
-      color: #5f6368;
+    /* Contenedor Informativo de Suscripción */
+    .info-suscripcion-box {
+      margin: 0 auto 24px auto;
+      padding: 16px;
+      border-radius: 8px;
+      font-weight: 500;
+      text-align: center;
+      display: none;
+      max-width: 1000px;
+      box-sizing: border-box;
     }
 
     /* BOTÓN PREMIUM CON EFECTO DE ESTRELLAS */
@@ -447,9 +425,9 @@
         </p>
       </div>
 
-      <div class="header-right-action" data-bs-toggle="tooltip" data-bs-placement="bottom"
+      <div class="header-right-action" id="premiumButtonWrapper" data-bs-toggle="tooltip" data-bs-placement="bottom"
         title="Incluye 5% de descuento, informes anuales, todas las funciones avanzadas del plan Pro+, soporte técnico premium y futuras mejoras.">
-        <a href="https://buy.stripe.com/00w8wO3N1gfc5nab3F6Ri04" target="_blank" class="btn-premium">
+        <a href="https://buy.stripe.com/00w8wO3N1gfc5nab3F6Ri04" target="_blank" class="btn-premium" id="btnPremiumAnual">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <polygon
@@ -463,7 +441,10 @@
 
     <div id="registrationActionBox" class="action-box"></div>
 
+    <div id="infoSuscripcion" class="info-suscripcion-box"></div>
+
     <div class="pricing-container" id="plansContainer">
+      
       <div class="card plan-card">
         <div class="card-title">Básica
           <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top"
@@ -507,8 +488,7 @@
         <div class="card-body">
           Informes profundos de reproducción, <strong>capturas por ejemplar y por palomero</strong>, <strong>cruces
             inteligentes basados en coincidencias genéticas</strong>, análisis ampliado y exportación profesional en
-          PDF
-          para decisiones más estratégicas.
+          PDF para decisiones más estratégicas.
         </div>
         <div class="card-footer">
           <stripe-buy-button buy-button-id="buy_btn_1TiP3LAMpjQA7o9hyonnFgTt"
@@ -526,8 +506,7 @@
         <div class="card-body">
           Automatización avanzada, almacenamiento ampliado y herramientas premium como <strong>Pedigrí
             inteligente</strong>, <strong>informes anuales completos del palomar</strong>, exportación avanzada en PDF
-          y
-          un control total a nivel reproductivo, genealógico y estratégico.
+          y un control total a nivel reproductivo, genealógico y estratégico.
         </div>
         <div class="card-footer">
           <stripe-buy-button buy-button-id="buy_btn_1TiP5TAMpjQA7o9hIIqHE48m"
@@ -542,89 +521,153 @@
   <script async src="https://js.stripe.com/v3/buy-button.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
- <script>
-    // =========================================================================
-    // INFRAESTRUCTURA SEGURA DE CONEXIÓN
-    // =========================================================================
-    function getEndpoint() {
-        const p1 = "https://docs.google.com/spreadsheets/d/";
-        const p2 = "1Vf6YTKbGRR2LsEJ2JKJdrCQLY9o57z5Vh9O7IvJ21qE";
-        const p3 = "/gviz/tq?tqx=out:csv&sheet=Auth";
-        return p1 + p2 + p3;
-    }
-
+  <script>
     function abrirVentanaRegistro() {
         window.open('https://forms.gle/FnmNY8HFqmhM2JyV8', 'registroPopup', 'width=auto,height=auto,resizable=yes,scrollbars=yes');
     }
 
-    function handleAccess(status) {
+    function handleAccess(status, userData = null) {
         const cards = document.querySelectorAll(".plan-card");
         const actionBox = document.getElementById("registrationActionBox");
         const header = document.getElementById("plansHeader");
+        const infoBox = document.getElementById("infoSuscripcion");
+        const btnPremium = document.getElementById("btnPremiumAnual");
 
         if (status === "not_registered") {
+            // CASO A: Bloqueo Total (El correo electrónico no existe en absoluto en Firestore)
             cards.forEach(c => c.classList.add("blocked"));
             header.classList.add("hidden");
+            infoBox.style.display = "none";
 
             actionBox.innerHTML = `
                 <h2>Acceso restringido</h2>
-                <p>Tu correo no está verificado o tu suscripción no está activa.<br>Por favor, revisa tu estado o regístrate.</p>
+                <p>Tu correo electrónico no se encuentra registrado en nuestro sistema.<br>Por favor, realiza tu registro inicial para continuar.</p>
                 <button class="btn-columba" onclick="abrirVentanaRegistro()">Gestionar Acceso</button>
             `;
             actionBox.style.display = "block";
-        } else {
-            cards.forEach(c => c.classList.remove("blocked"));
+        } 
+        else if (status === "registered" && userData) {
+            // CASO B: El cliente existe en la base de datos (Validación de estado informático)
             header.classList.remove("hidden");
             actionBox.style.display = "none";
+
+            const estado = userData.estado ? userData.estado.trim().toLowerCase() : "";
+            const fecVenceStr = userData.fec_vence || "";
+            
+            let puedeComprar = false;
+            let mensajeInfo = "";
+
+            if (estado !== "active") {
+                // No está activo: se le permite comprar el plan para reactivarse
+                puedeComprar = true;
+                mensajeInfo = `<strong>Estado de Cuenta:</strong> Inactivo / Vencido (Vencimiento registrado: ${fecVenceStr || 'Ninguno'}). Selecciona un plan a continuación para adquirir tu suscripción.`;
+                
+                infoBox.style.background = "#fff3cd"; 
+                infoBox.style.color = "#856404";
+                infoBox.style.border = "1px solid #ffeeba";
+            } else {
+                // Está activo: calculamos los días restantes basados en la fecha actual
+                let diasRestantes = 999;
+                if (fecVenceStr) {
+                    const hoy = new Date();
+                    const fechaVencimiento = new Date(fecVenceStr);
+                    
+                    // Normalización de horas para cálculo de días absolutos
+                    hoy.setHours(0, 0, 0, 0);
+                    fechaVencimiento.setHours(0, 0, 0, 0);
+                    
+                    const diffTime = fechaVencimiento - hoy;
+                    diasRestantes = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                }
+
+                if (diasRestantes <= 3) {
+                    // Próximo a vencer (<= 3 días): se le permite comprar la renovación anticipada
+                    puedeComprar = true;
+                    mensajeInfo = `<strong>Suscripción Activa:</strong> Tu cuenta vence pronto el ${fecVenceStr} (Te quedan ${diasRestantes} días). Tienes permitido realizar tu renovación anticipada seleccionando un plan.`;
+                    
+                    infoBox.style.background = "#e8f0fe"; 
+                    infoBox.style.color = "#1a73e8";
+                    infoBox.style.border = "1px solid #c2e7ff";
+                } else {
+                    // Activo con suficiente tiempo (> 3 días): Se le bloquea la opción de comprar duplicado
+                    puedeComprar = false;
+                    mensajeInfo = `<strong>Suscripción Activa:</strong> Tu cuenta se encuentra totalmente vigente hasta el ${fecVenceStr}. No necesitas adquirir otro plan por ahora. Los botones de compra se habilitarán automáticamente cuando falten 3 días o menos para tu vencimiento.`;
+                    
+                    infoBox.style.background = "#d4edda"; 
+                    infoBox.style.color = "#155724";
+                    infoBox.style.border = "1px solid #c3e6cb";
+                }
+            }
+
+            // Mostrar el banner informativo
+            infoBox.innerHTML = `<p style="margin:0; font-size:0.95rem; line-height:1.5;">${mensajeInfo}</p>`;
+            infoBox.style.display = "block";
+
+            // Control de activación/desactivación de los botones de Stripe según la ventana permitida
+            if (puedeComprar) {
+                cards.forEach(c => {
+                    c.classList.remove("blocked");
+                    c.style.pointerEvents = "auto"; 
+                });
+                if (btnPremium) {
+                    btnPremium.style.pointerEvents = "auto";
+                    btnPremium.style.opacity = "1";
+                    btnPremium.style.filter = "none";
+                }
+            } else {
+                cards.forEach(c => {
+                    c.classList.add("blocked");
+                    // Deshabilitamos eventos de click sobre los botones de Stripe para evitar compras accidentales
+                    c.style.pointerEvents = "none"; 
+                });
+                if (btnPremium) {
+                    btnPremium.style.pointerEvents = "none";
+                    btnPremium.style.opacity = "0.4";
+                    btnPremium.style.filter = "grayscale(100%)";
+                }
+            }
         }
     }
 
     async function ejecutarVerificacionDeAcceso() {
-    const parametrosURL = new URLSearchParams(window.location.search);
-    const emailBuscado = parametrosURL.get("user");
+        const parametrosURL = new URLSearchParams(window.location.search);
+        const emailBuscado = parametrosURL.get("user");
 
-    if (!emailBuscado) {
-        handleAccess("not_registered");
-        return;
-    }
-
-    const emailLimpio = emailBuscado.trim().toLowerCase();
-    
-    try {
-        const url = `https://firestore.googleapis.com/v1/projects/columbanotebook/databases/(default)/documents/usuarios_autorizados/${emailLimpio}`;
-        const respuesta = await fetch(url);
-        
-        if (!respuesta.ok) {
-            handleAccess("not_registered"); // Correo no existe en BD
+        if (!emailBuscado) {
+            handleAccess("not_registered");
             return;
         }
 
-        const data = await respuesta.json();
+        const emailLimpio = emailBuscado.trim().toLowerCase();
         
-        // Extraemos los datos para mostrarlos al usuario
-        const estado = data.fields.estado?.stringValue;
-        const fechaVence = data.fields.fec_vence?.stringValue;
+        try {
+            const url = `https://firestore.googleapis.com/v1/projects/columbanotebook/databases/(default)/documents/usuarios_autorizados/${emailLimpio}`;
+            const respuesta = await fetch(url);
+            
+            if (!respuesta.ok) {
+                handleAccess("not_registered"); 
+                return;
+            }
 
-        // Marcamos como registrado porque el correo existe
-        handleAccess("registered");
-        
-        // Muestra la info en un elemento de tu HTML (ej. <div id="infoSuscripcion"></div>)
-        const infoDiv = document.getElementById("infoSuscripcion");
-        if (infoDiv) {
-            infoDiv.innerHTML = `
-                <p>Estado: ${estado}</p>
-                <p>Tu suscripción vence el: ${fechaVence}</p>
-            `;
+            const data = await respuesta.json();
+            
+            // Extracción segura de la estructura JSON devuelta por la API REST de Firestore
+            const datosUsuario = {
+                estado: data.fields.estado?.stringValue || "",
+                fec_vence: data.fields.fec_vence?.stringValue || ""
+            };
+
+            // Notificamos que está registrado pasándole sus parámetros reales
+            handleAccess("registered", datosUsuario);
+
+        } catch (error) {
+            console.error("Error en la petición de autenticación:", error);
+            handleAccess("not_registered");
         }
-
-    } catch (error) {
-        handleAccess("not_registered");
     }
-}
 
     document.addEventListener("DOMContentLoaded", ejecutarVerificacionDeAcceso);
-</script>
+  </script>
 
 </body>
-
 </html>
