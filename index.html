@@ -312,12 +312,30 @@
       pointer-events: none;
     }
 
-    .btn-premium::before { top: 6px; left: 10px; animation-delay: 0s; }
-    .btn-premium::after { bottom: 6px; right: 12px; animation-delay: 0.9s; }
+    .btn-premium::before {
+      top: 6px;
+      left: 10px;
+      animation-delay: 0s;
+    }
+
+    .btn-premium::after {
+      bottom: 6px;
+      right: 12px;
+      animation-delay: 0.9s;
+    }
 
     @keyframes sparkle {
-      0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-      50% { opacity: 1; transform: scale(1.2) rotate(20deg); }
+
+      0%,
+      100% {
+        opacity: 0;
+        transform: scale(0.5) rotate(0deg);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(20deg);
+      }
     }
 
     /* Contenedor específico para Google Sign In */
@@ -347,9 +365,13 @@
 
       <div class="header-right-action" id="premiumButtonWrapper" data-bs-toggle="tooltip" data-bs-placement="bottom"
         title="Incluye 5% de descuento, informes anuales, todas las funciones avanzadas del plan Pro+, soporte técnico premium y futuras mejoras.">
-        <a href="https://buy.stripe.com/00w8wO3N1gfc5nab3F6Ri04" target="_blank" class="btn-premium" id="btnPremiumAnual">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        <a href="https://buy.stripe.com/00w8wO3N1gfc5nab3F6Ri04" target="_blank" class="btn-premium"
+          id="btnPremiumAnual">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+            </polygon>
           </svg>
           Plan Anual Premium
         </a>
@@ -357,12 +379,12 @@
     </div>
 
     <div id="googleAuthBox" class="google-auth-container">
-        <img src="https://drive.google.com/thumbnail?id=1GQvjfz-HN7byoeHQqhPsrc9EngvRiaXV" alt="Logo Columba" style="width:100px; margin-bottom:20px;">
-        <h2 style="font-size:1.5rem; color:#202124; margin:0 0 10px 0;">Verificación de Identidad</h2>
-        <p style="color:#5f6368; max-width:360px; margin:0 0 24px 0; font-size:0.95rem; line-height:1.4;">
-            Para mostrarte las opciones de suscripción vinculadas a tu cuenta, por favor identifícate con Google.
-        </p>
-        <div id="buttonDiv"></div>
+      <img src="https://drive.google.com/thumbnail?id=1GQvjfz-HN7byoeHQqhPsrc9EngvRiaXV" alt="Logo Columba" style="width:100px; margin-bottom:20px;">
+      <h2 style="font-size:1.5rem; color:#202124; margin:0 0 10px 0;">Verificación de Identidad</h2>
+      <p style="color:#5f6368; max-width:360px; margin:0 0 24px 0; font-size:0.95rem; line-height:1.4;">
+        Para mostrarte las opciones de suscripción vinculadas a tu cuenta, por favor identifícate con Google.
+      </p>
+      <div id="buttonDiv"></div>
     </div>
 
     <div id="registrationActionBox" class="action-box"></div>
@@ -370,12 +392,15 @@
     <div id="infoSuscripcion" class="info-suscripcion-box"></div>
 
     <div class="pricing-container hidden" id="plansContainer">
-      
+
       <div class="card plan-card">
-        <div class="card-title">Básica <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye registros básicos de ejemplares, control inicial del palomar y exportación en PDF."></i></div>
+        <div class="card-title">Básica
+          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye registros básicos de ejemplares, control inicial del palomar y exportación en PDF."></i>
+        </div>
         <div class="card-subtitle">Funciones esenciales.</div>
         <div class="card-body">
-          Organización básica de ejemplares, registros fundamentales y exportación inicial en PDF. Ideal para comenzar el control general del palomar.
+          Organización básica de ejemplares, registros fundamentales y exportación inicial en PDF. Ideal para comenzar
+          el control general del palomar.
         </div>
         <div class="card-footer">
           <stripe-buy-button buy-button-id="buy_btn_1TiMvDAMpjQA7o9hq0kBlyXu"
@@ -385,10 +410,13 @@
       </div>
 
       <div class="card plan-card">
-        <div class="card-title">Core <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Agrega cálculo automático de edades, informes ampliados y control individual del ejemplar."></i></div>
+        <div class="card-title">Core
+          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Agrega cálculo automático de edades, informes ampliados y control individual del ejemplar."></i>
+        </div>
         <div class="card-subtitle">Gestión individual.</div>
         <div class="card-body">
-          Control completo de ejemplares, seguimiento reproductivo, <strong>cálculo automático de edades</strong>, informes ampliados y exportación en PDF detallada.
+          Control completo de ejemplares, seguimiento reproductivo, <strong>cálculo automático de edades</strong>,
+          informes ampliados y exportación en PDF detallada.
         </div>
         <div class="card-footer">
           <stripe-buy-button buy-button-id="buy_btn_1TiP1MAMpjQA7o9hXjPwBKMN"
@@ -398,10 +426,13 @@
       </div>
 
       <div class="card plan-card">
-        <div class="card-title">Plus <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye capturas por ejemplar y por palomero, informes más profundos y cruces inteligentes genéticos."></i></div>
+        <div class="card-title">Plus
+          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye capturas por ejemplar y por palomero, informes más profundos y cruces inteligentes genéticos."></i>
+        </div>
         <div class="card-subtitle">Análisis avanzado.</div>
         <div class="card-body">
-          Informes profundos de reproducción, <strong>capturas por ejemplar y por palomero</strong>, <strong>cruces inteligentes basados en coincidencias genéticas</strong> y exportación profesional.
+          Informes profundos de reproducción, <strong>capturas por ejemplar y por palomero</strong>,
+          <strong>cruces inteligentes basados en coincidencias genéticas</strong> y exportación profesional.
         </div>
         <div class="card-footer">
           <stripe-buy-button buy-button-id="buy_btn_1TiP3LAMpjQA7o9hyonnFgTt"
@@ -411,10 +442,13 @@
       </div>
 
       <div class="card featured plan-card">
-        <div class="card-title">Pro+ <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye Pedigrí inteligente, informes anuales completos, almacenamiento ampliado y herramientas estratégicas."></i></div>
+        <div class="card-title">Pro+
+          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye Pedigrí inteligente, informes anuales completos, almacenamiento ampliado y herramientas estratégicas."></i>
+        </div>
         <div class="card-subtitle">Rendimiento máximo.</div>
         <div class="card-body">
-          Automatización avanzada, almacenamiento ampliado y herramientas premium como <strong>Pedigrí inteligente</strong>, <strong>informes anuales completos</strong> y control total genealógico.
+          Automatización avanzada, almacenamiento ampliado y herramientas premium como
+          <strong>Pedigrí inteligente</strong>, <strong>informes anuales completos</strong> y control total genealógico.
         </div>
         <div class="card-footer">
           <stripe-buy-button buy-button-id="buy_btn_1TiP5TAMpjQA7o9hIIqHE48m"
@@ -604,59 +638,81 @@
     }
 
     async function ejecutarVerificacionDeAcceso(emailLimpio) {
-        console.log("DEBUG: Consultando hoja de autorización para el usuario:", emailLimpio);
-        
-        const T1 = "x9a#pl2";
-        const T2 = "-adminmaster-2026";
-        const TOKEN_ADMIN = T1 + T2; 
+    console.log("DEBUG: Consultando hoja de autorización para el usuario:", emailLimpio);
+    
+    const T1 = "x9a#pl2";
+    const T2 = "-adminmaster-2026";
+    const TOKEN_ADMIN = T1 + T2; 
 
-        try {
-            const respuesta = await fetch(getEndpoint());
-            if (!respuesta.ok) throw new Error("Error de conexión con Auth Sheet.");
+    try {
+        const respuesta = await fetch(getEndpoint());
+        if (!respuesta.ok) throw new Error("Error de conexión con Auth Sheet.");
 
-            const textoCSV = await respuesta.text();
-            const lineas = textoCSV.split('\n').slice(1);
+        const textoCSV = await respuesta.text();
+        const lineas = textoCSV.split('\n').slice(1);
 
-            let esAdmin = false;
-            let usuarioEncontrado = null;
+        let esAdmin = false;
+        let usuarioEncontrado = null;
 
-            lineas.forEach((linea, index) => {
-                if (!linea.trim()) return;
+        lineas.forEach((linea, index) => {
+            if (!linea.trim()) return;
 
-                const cols = linea.split(',');
-                const limpiar = (str) => (!str ? "" : str.replace(/"/g, '').replace(/\r/g, '').trim().toLowerCase());
+            // Usamos una expresión regular para separar por comas respetando celdas con comillas si las hubiera
+            const cols = linea.split(',');
+            const limpiar = (str) => (!str ? "" : str.replace(/"/g, '').replace(/\r/g, '').trim().toLowerCase());
 
-                const correoFila = limpiar(cols[1]);
-                const estadoFila = limpiar(cols[21]); 
-                const accionFila = limpiar(cols[5]);  
-                const fechaVenceFila = cols[22] ? cols[22].replace(/"/g, '').replace(/\r/g, '').trim() : "";
+            const correoFila = limpiar(cols[1]);
+            const estadoFila = limpiar(cols[21]); 
+            const accionFila = limpiar(cols[5]);  
+            
+            // Extracción limpia de la cadena cruda de fecha
+            let fechaVenceRaw = cols[22] ? cols[22].replace(/"/g, '').replace(/\r/g, '').trim() : "";
+            let fechaVenceFormateada = fechaVenceRaw;
 
-                if (correoFila === "__system_config__" && accionFila === TOKEN_ADMIN) {
-                    esAdmin = true;
+            // CONTROL ANALÍTICO: Forzamos el formateo correcto si viene como Date String de la hoja
+            if (fechaVenceRaw && fechaVenceRaw !== "") {
+                const fechaObj = new Date(fechaVenceRaw);
+                // Si es una fecha válida en JS, la formateamos manualmente evitando el error del mes base 0
+                if (!isNaN(fechaObj.getTime())) {
+                    const dia = String(fechaObj.getDate()).padStart(2, '0');
+                    const mes = String(fechaObj.getMonth() + 1).padStart(2, '0'); // +1 corrige el desfase de JavaScript
+                    const anio = fechaObj.getFullYear();
+                    
+                    const horas = String(fechaObj.getHours()).padStart(2, '0');
+                    const minutos = String(fechaObj.getMinutes()).padStart(2, '0');
+                    const segundos = String(fechaObj.getSeconds()).padStart(2, '0');
+                    
+                    fechaVenceFormateada = `${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}`;
                 }
-
-                if (correoFila === emailLimpio) {
-                    usuarioEncontrado = {
-                        estado: estadoFila,
-                        fec_vence: fechaVenceFila
-                    };
-                }
-            });
-
-            if (esAdmin) {
-                handleAccess("admin");
-            } else if (usuarioEncontrado) {
-                handleAccess("registered", usuarioEncontrado);
-            } else {
-                handleAccess("not_registered");
             }
 
-        } catch (error) {
-            console.error("DEBUG: Error crítico en fetch CSV de Sheets:", error.message);
+            if (correoFila === "__system_config__" && accionFila === TOKEN_ADMIN) {
+                esAdmin = true;
+            }
+
+            if (correoFila === emailLimpio) {
+                usuarioEncontrado = {
+                    estado: estadoFila,
+                    fec_vence: fechaVenceFormateada // Pasamos la fecha ya corregida y sanitizada
+                };
+            }
+        });
+
+        if (esAdmin) {
+            handleAccess("admin");
+        } else if (usuarioEncontrado) {
+            handleAccess("registered", usuarioEncontrado);
+        } else {
             handleAccess("not_registered");
         }
+
+    } catch (error) {
+        console.error("DEBUG: Error crítico en fetch CSV de Sheets:", error.message);
+        handleAccess("not_registered");
     }
+  }
   </script>
 
 </body>
+
 </html>
