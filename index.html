@@ -479,11 +479,11 @@
     // Inicialización del servicio de Google Identity al cargar la ventana
     window.onload = function () {
         google.accounts.id.initialize({
-            client_id: "839165918275-r1s1cvia9uhp843u6hcic91sntasd1q6.apps.googleusercontent.com", // Cambia esto por tu Client ID de Cloud Console
+            client_id: "839165918275-r1s1cvia9uhp843u6hcic91sntasd1q6.apps.googleusercontent.com", 
             callback: manejarRespuestaGoogle,
             context: "signin",
             ux_mode: "popup",
-            auto_select: true // Intenta loguear silenciosamente si el usuario ya dio permiso antes
+            auto_select: true 
         });
 
         // Renderiza el botón visual nativo de Google
@@ -583,16 +583,17 @@
                 infoBox.style.border = "1px solid #ffeeba";
             } else {
                 let diasRestantes = 999;
-                if (fecVenceStr) {
+                
+                // CONTROL ANALÍTICO: Usamos el objeto Date nativo que preservamos para calcular los días restantes de forma exacta
+                if (userData.fec_vence_obj && !isNaN(userData.fec_vence_obj.getTime())) {
                     const hoy = new Date();
-                    const fechaVencimiento = new Date(fecVenceStr);
+                    const fechaVencimiento = new Date(userData.fec_vence_obj);
+                    
                     hoy.setHours(0, 0, 0, 0);
                     fechaVencimiento.setHours(0, 0, 0, 0);
                     
-                    if (!isNaN(fechaVencimiento.getTime())) {
-                        const diffTime = fechaVencimiento - hoy;
-                        diasRestantes = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    }
+                    const diffTime = fechaVencimiento - hoy;
+                    diasRestantes = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 }
 
                 if (diasRestantes <= 3) {
@@ -638,80 +639,68 @@
     }
 
     async function ejecutarVerificacionDeAcceso(emailLimpio) {
-    console.log("DEBUG: Consultando hoja de autorización para el usuario:", emailLimpio);
-    
-    const T1 = "x9a#pl2";
-    const T2 = "-adminmaster-2026";
-    const TOKEN_ADMIN = T1 + T2; 
+        console.log("DEBUG: Consultando Firestore en tiempo real para el usuario:", emailLimpio);
+        
+        const projectId = "columbanotebook";
+        // Petición directa a la API REST de Firestore (evita por completo la caché de Sheets)
+        const urlFirestore = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/usuarios_autorizados/${encodeURIComponent(emailLimpio.trim().toLowerCase())}`;
 
-    try {
-        const respuesta = await fetch(getEndpoint());
-        if (!respuesta.ok) throw new Error("Error de conexión con Auth Sheet.");
-
-        const textoCSV = await respuesta.text();
-        const lineas = textoCSV.split('\n').slice(1);
-
-        let esAdmin = false;
-        let usuarioEncontrado = null;
-
-        lineas.forEach((linea, index) => {
-            if (!linea.trim()) return;
-
-            // Usamos una expresión regular para separar por comas respetando celdas con comillas si las hubiera
-            const cols = linea.split(',');
-            const limpiar = (str) => (!str ? "" : str.replace(/"/g, '').replace(/\r/g, '').trim().toLowerCase());
-
-            const correoFila = limpiar(cols[1]);
-            const estadoFila = limpiar(cols[21]); 
-            const accionFila = limpiar(cols[5]);  
+        try {
+            const respuesta = await fetch(urlFirestore);
             
-            // Extracción limpia de la cadena cruda de fecha
-            let fechaVenceRaw = cols[22] ? cols[22].replace(/"/g, '').replace(/\r/g, '').trim() : "";
-            let fechaVenceFormateada = fechaVenceRaw;
+            if (respuesta.status === 404) {
+                console.warn("DEBUG: Usuario no registrado en Firestore.");
+                handleAccess("not_registered");
+                return;
+            }
 
-            // CONTROL ANALÍTICO: Forzamos el formateo correcto si viene como Date String de la hoja
-            if (fechaVenceRaw && fechaVenceRaw !== "") {
-                const fechaObj = new Date(fechaVenceRaw);
-                // Si es una fecha válida en JS, la formateamos manualmente evitando el error del mes base 0
-                if (!isNaN(fechaObj.getTime())) {
-                    const dia = String(fechaObj.getDate()).padStart(2, '0');
-                    const mes = String(fechaObj.getMonth() + 1).padStart(2, '0'); // +1 corrige el desfase de JavaScript
-                    const anio = fechaObj.getFullYear();
+            if (!respuesta.ok) throw new Error("Error de conexión con el backend de Firestore.");
+
+            const datosUsuario = await respuesta.json();
+            const campos = datosUsuario.fields;
+
+            if (!campos) {
+                handleAccess("not_registered");
+                return;
+            }
+
+            // Extracción limpia de las propiedades stringValue y timestampValue
+            const estadoFila = campos.estado && campos.estado.stringValue ? campos.estado.stringValue.trim().toLowerCase() : "";
+            
+            let fechaVenceFormateada = "";
+            let fechaVenceObj = null;
+
+            if (campos.fec_vence && campos.fec_vence.timestampValue) {
+                // Parseo nativo del String ISO UTC que viene directo de Firebase
+                fechaVenceObj = new Date(campos.fec_vence.timestampValue);
+                
+                if (!isNaN(fechaVenceObj.getTime())) {
+                    const dia = String(fechaVenceObj.getDate()).padStart(2, '0');
+                    const mes = String(fechaVenceObj.getMonth() + 1).padStart(2, '0'); // Corrección mes base 0
+                    const anio = fechaVenceObj.getFullYear();
                     
-                    const horas = String(fechaObj.getHours()).padStart(2, '0');
-                    const minutos = String(fechaObj.getMinutes()).padStart(2, '0');
-                    const segundos = String(fechaObj.getSeconds()).padStart(2, '0');
+                    const horas = String(fechaVenceObj.getHours()).padStart(2, '0');
+                    const minutos = String(fechaVenceObj.getMinutes()).padStart(2, '0');
+                    const segundos = String(fechaVenceObj.getSeconds()).padStart(2, '0');
                     
                     fechaVenceFormateada = `${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}`;
                 }
             }
 
-            if (correoFila === "__system_config__" && accionFila === TOKEN_ADMIN) {
-                esAdmin = true;
-            }
+            const usuarioEncontrado = {
+                estado: estadoFila,
+                fec_vence: fechaVenceFormateada,
+                fec_vence_obj: fechaVenceObj // Enviamos el objeto Date real para cálculos matemáticos en handleAccess
+            };
 
-            if (correoFila === emailLimpio) {
-                usuarioEncontrado = {
-                    estado: estadoFila,
-                    fec_vence: fechaVenceFormateada // Pasamos la fecha ya corregida y sanitizada
-                };
-            }
-        });
-
-        if (esAdmin) {
-            handleAccess("admin");
-        } else if (usuarioEncontrado) {
             handleAccess("registered", usuarioEncontrado);
-        } else {
+
+        } catch (error) {
+            console.error("DEBUG: Error crítico en fetch de Firestore:", error.message);
             handleAccess("not_registered");
         }
-
-    } catch (error) {
-        console.error("DEBUG: Error crítico en fetch CSV de Sheets:", error.message);
-        handleAccess("not_registered");
     }
-  }
-  </script>
+</script>
 
 </body>
 
