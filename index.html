@@ -139,20 +139,9 @@
     }
 
     @keyframes sparkle {
-      0% {
-        opacity: 0;
-        transform: scale(0.5) rotate(0deg);
-      }
-
-      50% {
-        opacity: 1;
-        transform: scale(1.2) rotate(20deg);
-      }
-
-      100% {
-        opacity: 0;
-        transform: scale(0.5) rotate(0deg);
-      }
+      0% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1.2) rotate(20deg); }
+      100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
     }
 
     .hidden {
@@ -168,49 +157,15 @@
     }
 
     @media (max-width: 750px) {
-      .header-flexible {
-        flex-direction: column;
-        text-align: center;
-        gap: 16px;
-      }
-
-      .header-text-centered {
-        text-align: center;
-        max-width: 100%;
-      }
-
-      .header-right-action {
-        margin-left: 0;
-        margin-top: 8px;
-      }
-
-      .logo-card {
-        width: 110px;
-      }
-
-      .titulo-pagina {
-        font-size: 1.5rem;
-      }
-
-      .pricing-container {
-        grid-template-columns: 1fr;
-        width: 100%;
-        gap: 20px;
-      }
-
-      .plan-card {
-        width: 100%;
-        box-sizing: border-box;
-        margin: 0 auto;
-      }
-
-      .container-principal {
-        padding: 0 12px;
-      }
-
-      .main-card {
-        padding: 20px;
-      }
+      .header-flexible { flex-direction: column; text-align: center; gap: 16px; }
+      .header-text-centered { text-align: center; max-width: 100%; }
+      .header-right-action { margin-left: 0; margin-top: 8px; }
+      .logo-card { width: 110px; }
+      .titulo-pagina { font-size: 1.5rem; }
+      .pricing-container { grid-template-columns: 1fr; width: 100%; gap: 20px; }
+      .plan-card { width: 100%; box-sizing: border-box; margin: 0 auto; }
+      .container-principal { padding: 0 12px; }
+      .main-card { padding: 20px; }
     }
 
     .card {
@@ -350,7 +305,7 @@
       text-align: center;
       background-color: #000;
       border-radius: 6px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     }
 
     .tooltip .tooltip-arrow {
@@ -367,37 +322,10 @@
       border-color: #000 transparent transparent transparent;
     }
 
-    .bs-tooltip-bottom .tooltip-arrow {
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .bs-tooltip-bottom .tooltip-arrow::before {
-      border-width: 0 0.4rem 0.4rem 0.4rem;
-      border-color: transparent transparent #000 transparent;
-    }
-
-    .bs-tooltip-top .tooltip-arrow {
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .bs-tooltip-top .tooltip-arrow::before {
-      border-width: 0.4rem 0.4rem 0 0.4rem;
-      border-color: #000 transparent transparent transparent;
-    }
-
-    .btn-login {
-      background: #4285F4;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-    }
+    .bs-tooltip-bottom .tooltip-arrow { top: 0; left: 50%; transform: translateX(-50%); }
+    .bs-tooltip-bottom .tooltip-arrow::before { border-width: 0 0.4rem 0.4rem 0.4rem; border-color: transparent transparent #000 transparent; }
+    .bs-tooltip-top .tooltip-arrow { bottom: 0; left: 50%; transform: translateX(-50%); }
+    .bs-tooltip-top .tooltip-arrow::before { border-width: 0.4rem 0.4rem 0 0.4rem; border-color: #000 transparent transparent transparent; }
   </style>
 </head>
 
@@ -414,20 +342,10 @@
         <p class="text-muted">Selecciona el nivel de acceso que mejor se adapte a tus necesidades.</p>
       </div>
 
-      <div id="loginBox" class="action-box">
-        <h2>Acceso a Columba Notebook</h2>
-        <p>Inicia sesión con Google para verificar tu suscripción.</p>
-        <button id="btnGoogleLogin" class="btn-login"><i class="bi bi-google"></i> Iniciar sesión con Google</button>
-      </div>
-
-      <div class="header-right-action" data-bs-toggle="tooltip" data-bs-placement="bottom"
-        title="Incluye 5% de descuento, informes anuales, todas las funciones avanzadas del plan Pro+, soporte técnico premium y futuras mejoras.">
+      <div class="header-right-action" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Incluye 5% de descuento, informes anuales, todas las funciones avanzadas del plan Pro+, soporte técnico premium y futuras mejoras.">
         <a href="https://buy.stripe.com/00w8wO3N1gfc5nab3F6Ri04" target="_blank" class="btn-premium">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polygon
-              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-            </polygon>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
           </svg>
           Plan Anual Premium
         </a>
@@ -439,64 +357,41 @@
     <div class="pricing-container" id="plansContainer">
       <!-- Básica -->
       <div class="card plan-card">
-        <div class="card-title">Básica
-          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye registros básicos de ejemplares, control inicial del palomar y exportación en PDF."></i>
-        </div>
+        <div class="card-title">Básica <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye registros básicos de ejemplares, control inicial del palomar y exportación en PDF."></i></div>
         <div class="card-subtitle">Funciones esenciales.</div>
-        <div class="card-body">Organización básica de ejemplares, registros fundamentales y exportación inicial en PDF.
-          Ideal para comenzar el control general del palomar.</div>
+        <div class="card-body">Organización básica de ejemplares, registros fundamentales y exportación inicial en PDF. Ideal para comenzar el control general del palomar.</div>
         <div class="card-footer">
-          <stripe-buy-button buy-button-id="buy_btn_1TiMvDAMpjQA7o9hq0kBlyXu"
-            publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD">
-          </stripe-buy-button>
+          <stripe-buy-button buy-button-id="buy_btn_1TiMvDAMpjQA7o9hq0kBlyXu" publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD"></stripe-buy-button>
         </div>
       </div>
 
       <!-- Core -->
       <div class="card plan-card">
-        <div class="card-title">Core
-          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Agrega cálculo automático de edades, informes ampliados y control individual del ejemplar."></i>
-        </div>
+        <div class="card-title">Core <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Agrega cálculo automático de edades, informes ampliados y control individual del ejemplar."></i></div>
         <div class="card-subtitle">Gestión individual.</div>
-        <div class="card-body">Control completo de ejemplares, seguimiento reproductivo,
-          <strong>cálculo automático de edades</strong>, informes ampliados y exportación en PDF con más detalle.</div>
+        <div class="card-body">Control completo de ejemplares, seguimiento reproductivo, <strong>cálculo automático de edades</strong>, informes ampliados y exportación en PDF con más detalle.</div>
         <div class="card-footer">
-          <stripe-buy-button buy-button-id="buy_btn_1TiP1MAMpjQA7o9hXjPwBKMN"
-            publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD">
-          </stripe-buy-button>
+          <stripe-buy-button buy-button-id="buy_btn_1TiP1MAMpjQA7o9hXjPwBKMN" publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD"></stripe-buy-button>
         </div>
       </div>
 
       <!-- Plus -->
       <div class="card plan-card">
-        <div class="card-title">Plus
-          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye capturas por ejemplar y por palomero, informes más profundos y cruces inteligentes."></i>
-        </div>
+        <div class="card-title">Plus <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye capturas por ejemplar y por palomero, informes más profundos y cruces inteligentes."></i></div>
         <div class="card-subtitle">Análisis avanzado.</div>
-        <div class="card-body">Informes profundos de reproducción,
-          <strong>capturas por ejemplar y por palomero</strong>,
-          <strong>cruces inteligentes basados en coincidencias genéticas</strong>, análisis ampliado y exportación
-          profesional.</div>
+        <div class="card-body">Informes profundos de reproducción, <strong>capturas por ejemplar y por palomero</strong>, <strong>cruces inteligentes basados en coincidencias genéticas</strong>, análisis ampliado y exportación profesional.</div>
         <div class="card-footer">
-          <stripe-buy-button buy-button-id="buy_btn_1TiP3LAMpjQA7o9hyonnFgTt"
-            publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD">
-          </stripe-buy-button>
+          <stripe-buy-button buy-button-id="buy_btn_1TiP3LAMpjQA7o9hyonnFgTt" publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD"></stripe-buy-button>
         </div>
       </div>
 
       <!-- Pro+ -->
       <div class="card featured plan-card">
-        <div class="card-title">Pro+
-          <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye Pedigrí inteligente, informes anuales completos, almacenamiento ampliado."></i>
-        </div>
+        <div class="card-title">Pro+ <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye Pedigrí inteligente, informes anuales completos, almacenamiento ampliado."></i></div>
         <div class="card-subtitle">Rendimiento máximo.</div>
-        <div class="card-body">Automatización avanzada, almacenamiento ampliado y herramientas premium como
-          <strong>Pedigrí inteligente</strong>, <strong>informes anuales completos del palomar</strong>, exportación
-          avanzada en PDF y un control total.</div>
+        <div class="card-body">Automatización avanzada, almacenamiento ampliado y herramientas premium como <strong>Pedigrí inteligente</strong>, <strong>informes anuales completos del palomar</strong>, exportación avanzada en PDF y un control total.</div>
         <div class="card-footer">
-          <stripe-buy-button buy-button-id="buy_btn_1TiP5TAMpjQA7o9hIIqHE48m"
-            publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD">
-          </stripe-buy-button>
+          <stripe-buy-button buy-button-id="buy_btn_1TiP5TAMpjQA7o9hIIqHE48m" publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD"></stripe-buy-button>
         </div>
       </div>
     </div>
@@ -506,10 +401,12 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script type="module">
+    // 1. Importaciones necesarias del SDK de Firebase (Añadido getAuth)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
     import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
+    // 2. Tu configuración
     const firebaseConfig = {
       apiKey: "AIzaSyAzHnH4uTgJPPrZntzTwWm_dccQrBBBfa8",
       authDomain: "columbanotebook.firebaseapp.com",
@@ -519,39 +416,84 @@
       appId: "1:839165918275:web:cf8c703391dcc9068fc8f6"
     };
 
+    // 3. Inicializar Firebase y Servicios
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const auth = getAuth();
-    const provider = new GoogleAuthProvider();
+    const auth = getAuth(app);
 
-    // Lógica de Login
-    document.getElementById("btnGoogleLogin").addEventListener("click", () => {
-      signInWithPopup(auth, provider).catch(console.error);
-    });
+    window.abrirVentanaRegistro = function() {
+      window.open('https://forms.gle/FnmNY8HFqmhM2JyV8', '_blank', 'width=auto,height=auto,resizable=yes,scrollbars=yes');
+    };
 
+    // 4. Lógica de Validación contra Firestore
     async function validarAccesoFirestore(email) {
-      const q = query(collection(db, "usuarios_autorizados"), where("email", "==", email.toLowerCase().trim()));
-      const snap = await getDocs(q);
-      return !snap.empty && snap.docs[0].data().estado === "active";
-    }
-
-    // Detector automático de sesión
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        validarAccesoFirestore(user.email).then(esValido => {
-          if (esValido) {
-            document.getElementById("plansHeader").classList.remove("hidden");
-            document.getElementById("loginBox").style.display = "none";
-            // Mostrar planes...
-          } else {
-            alert("Usuario no autorizado");
+      if (!email) return "not_registered";
+      
+      try {
+        const q = query(collection(db, "usuarios_autorizados"), where("email", "==", email.toLowerCase().trim()));
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) return "not_registered";
+        
+        let esValido = false;
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          if (data.action === "Autorizado" && data.estado === "active") {
+            esValido = true;
           }
         });
+        return esValido ? "active" : "registered_not_paid";
+      } catch (e) {
+        console.error("Error en Firestore: ", e);
+        return "not_registered";
+      }
+    }
+
+    // 5. Manejo de Interfaz de Usuario
+    function handleAccess(status) {
+      const cards = document.querySelectorAll(".plan-card");
+      const actionBox = document.getElementById("registrationActionBox");
+      const header = document.getElementById("plansHeader");
+
+      if (status !== "active") {
+        cards.forEach(c => c.classList.add("blocked"));
+        if (header) header.classList.add("hidden");
+
+        actionBox.innerHTML = `
+          <h2>Acceso Restringido</h2>
+          <p>Tu usuario no se encuentra activo o registrado en el sistema.<br>Si eres nuevo, inicia tu registro ahora.</p>
+          <button class="btn-columba" onclick="abrirVentanaRegistro()">Regístrate ahora</button>
+          <div class="new-tab-info">Se abrirá en una nueva pestaña</div>
+        `;
+        actionBox.style.display = "block";
       } else {
-        document.getElementById("loginBox").style.display = "block";
+        cards.forEach(c => c.classList.remove("blocked"));
+        if (header) header.classList.remove("hidden");
+        actionBox.style.display = "none";
+      }
+    }
+
+    // 6. Lógica de Control Dinámico Basada en Sesión Activa (CORREGIDO)
+    document.addEventListener("DOMContentLoaded", () => {
+      // Primero intenta buscar por parámetro de URL por compatibilidad de pruebas
+      const urlParams = new URLSearchParams(window.location.search);
+      const emailParam = urlParams.get('email');
+
+      if (emailParam) {
+        validarAccesoFirestore(emailParam).then(handleAccess);
+      } else {
+        // Si no hay parámetro, escucha en tiempo real quién está logueado en el navegador
+        onAuthStateChanged(auth, (user) => {
+          if (user && user.email) {
+            console.log("Usuario detectado automáticamente:", user.email);
+            validarAccesoFirestore(user.email).then(handleAccess);
+          } else {
+            console.log("No hay sesión activa detectada.");
+            handleAccess("not_registered");
+          }
+        });
       }
     });
   </script>
 </body>
-
 </html>
