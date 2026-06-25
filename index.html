@@ -1,7 +1,188 @@
 <!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Columba Notebook – Planes de Suscripción</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><style>:root{--color-primary:#1a73e8;--color-primary-hover:#1557b0}body{font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#f5f7fb;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;min-height:100vh}.container-principal{width:100%;max-width:1000px;margin:40px auto;padding:0 20px;box-sizing:border-box}.main-card{background:#fff;border-radius:12px;border:1px solid #dadce0;padding:32px;box-shadow:0 4px 12px rgba(0,0,0,.05);width:100%;max-width:1000px;margin:40px auto;box-sizing:border-box}.header-flexible{display:flex;align-items:center;justify-content:flex-start;gap:24px;border-bottom:1px solid #dadce0;padding-bottom:24px;margin-bottom:32px;flex-wrap:wrap}.logo-card{width:130px;flex-shrink:0;display:flex;justify-content:center;align-items:center}.header-logo{width:100%;height:auto;object-fit:contain}.header-text-centered{display:flex;flex-direction:column;justify-content:center;text-align:left;max-width:500px}.titulo-pagina{font-size:1.8rem;color:#202124;margin:0 0 8px 0;font-weight:600}.text-muted{color:#5f6368;margin:0;font-size:1rem;line-height:1.5}.header-right-action{margin-left:auto}.hidden{display:none!important}.pricing-container{width:100%;display:grid;grid-template-columns:repeat(2,1fr);gap:24px;box-sizing:border-box}@media(max-width:750px){.header-flexible{flex-direction:column;text-align:center;gap:16px}.header-text-centered{text-align:center;max-width:100%}.header-right-action{margin-left:0;margin-top:8px}.logo-card{width:110px}.titulo-pagina{font-size:1.5rem}.pricing-container{grid-template-columns:1fr;width:100%;gap:20px}.plan-card{width:100%;box-sizing:border-box;margin:0 auto}.main-card{padding:20px}}.card{background:#fff;border-radius:12px;border:1px solid #dadce0;padding:24px;display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease;word-wrap:break-word;overflow-wrap:break-word}.card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.06)}.card.featured{border:2px solid var(--color-primary);position:relative}.card.featured::before{content:"RECOMENDADO";position:absolute;top:-12px;right:20px;background:var(--color-primary);color:#fff;font-size:.75rem;font-weight:700;padding:2px 10px;border-radius:10px}.card-title{font-size:1.4rem;font-weight:600;margin-bottom:8px;color:#202124}.card-subtitle{font-size:.9rem;color:#5f6368;margin-bottom:16px}.card-body{font-size:.95rem;color:#3c4043;margin-bottom:24px;flex-grow:1;line-height:1.4}.card-footer{text-align:center;margin-top:auto}.blocked{opacity:.35;pointer-events:none;filter:grayscale(100%)}.action-box{background:#fff;padding:40px 24px;border-radius:12px;border:1px solid #dadce0;margin:20px auto 40px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.05);display:none;max-width:480px;width:100%;box-sizing:border-box}.action-box h2{font-size:1.6rem;margin-top:0;color:#202124}.action-box p{color:#5f6368;margin-bottom:24px;line-height:1.5}.btn-columba{display:inline-block;text-decoration:none;background-color:var(--color-primary);color:#fff;padding:12px 32px;border-radius:6px;font-weight:600;font-size:1rem;border:none;cursor:pointer;transition:background-color .2s}.btn-columba:hover{background-color:var(--color-primary-hover)}.info-suscripcion-box{margin:0 auto 24px auto;padding:16px;border-radius:8px;font-weight:500;text-align:center;display:none;max-width:1000px;box-sizing:border-box}.btn-premium{position:relative;display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:linear-gradient(135deg,#ffcc00,#ff9900);color:#222;font-weight:700;border-radius:8px;text-decoration:none;overflow:hidden;box-shadow:0 0 12px rgba(255,200,0,.6);transition:transform .2s ease,box-shadow .3s ease}.btn-premium:hover{transform:scale(1.05);box-shadow:0 0 18px rgba(255,200,0,.9)}.btn-premium::before,.btn-premium::after{content:"✦";position:absolute;color:rgba(255,255,255,.9);font-size:12px;animation:sparkle 1.8s infinite ease-in-out;pointer-events:none}.btn-premium::before{top:6px;left:10px;animation-delay:0s}.btn-premium::after{bottom:6px;right:12px;animation-delay:.9s}@keyframes sparkle{0%,100%{opacity:0;transform:scale(.5) rotate(0deg)}50%{opacity:1;transform:scale(1.2) rotate(20deg)}}.google-auth-container{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center}</style></head><body><div class="main-card"><div class="header-flexible hidden" id="plansHeader"><div class="logo-card"><img src="https://drive.google.com/thumbnail?id=1GQvjfz-HN7byoeHQqhPsrc9EngvRiaXV" alt="Logo Columba Notebook" class="header-logo"></div><div class="header-text-centered"><h1 class="titulo-pagina">Elige tu plan en Columba Notebook</h1><p class="text-muted">Selecciona el nivel de acceso que mejor se adapte a tus necesidades.</p></div><div class="header-right-action" id="premiumButtonWrapper" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Incluye 5% de descuento, informes anuales, todas las funciones avanzadas del plan Pro+, soporte técnico premium y futuras mejoras."><a href="https://buy.stripe.com/00w8wO3N1gfc5nab3F6Ri04" target="_blank" class="btn-premium" id="btnPremiumAnual"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> Plan Anual Premium</a></div></div><div id="googleAuthBox" class="google-auth-container"><img src="https://drive.google.com/thumbnail?id=1GQvjfz-HN7byoeHQqhPsrc9EngvRiaXV" alt="Logo Columba" style="width:100px;margin-bottom:20px;"><h2 style="font-size:1.5rem;color:#202124;margin:0 0 10px 0">Verificación de Identidad</h2><p style="color:#5f6368;max-width:360px;margin:0 0 24px 0;font-size:.95rem;line-height:1.4">Para mostrarte las opciones de suscripción vinculadas a tu cuenta, por favor identifícate con Google.</p><div id="buttonDiv"></div></div><div id="registrationActionBox" class="action-box"></div><div id="infoSuscripcion" class="info-suscripcion-box"></div><div class="pricing-container hidden" id="plansContainer"><div class="card plan-card"><div class="card-title">Básica <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye registros básicos de ejemplares, control inicial del palomar y exportación en PDF."></i></div><div class="card-subtitle">Funciones esenciales.</div><div class="card-body">Organización básica de ejemplares, registros fundamentales y exportación inicial en PDF. Ideal para comenzar el control general del palomar.</div><div class="card-footer"><stripe-buy-button buy-button-id="buy_btn_1TiMvDAMpjQA7o9hq0kBlyXu" publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD"></stripe-buy-button></div></div><div class="card plan-card"><div class="card-title">Core <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Agrega cálculo automático de edades, informes ampliados y control individual del ejemplar."></i></div><div class="card-subtitle">Gestión individual.</div><div class="card-body">Control completo de ejemplares, seguimiento reproductivo, <strong>cálculo automático de edades</strong>, informes ampliados y exportación en PDF detallada.</div><div class="card-footer"><stripe-buy-button buy-button-id="buy_btn_1TiP1MAMpjQA7o9hXjPwBKMN" publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD"></stripe-buy-button></div></div><div class="card plan-card"><div class="card-title">Plus <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye capturas por ejemplar y por palomero, informes más profundos y cruces inteligentes genéticos."></i></div><div class="card-subtitle">Análisis avanzado.</div><div class="card-body">Informes profundos de reproducción, <strong>capturas por ejemplar y por palomero</strong>, <strong>cruces inteligentes basados en coincidencias genéticas</strong> y exportación profesional.</div><div class="card-footer"><stripe-buy-button buy-button-id="buy_btn_1TiP3LAMpjQA7o9hyonnFgTt" publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD"></stripe-buy-button></div></div><div class="card featured plan-card"><div class="card-title">Pro+ <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Incluye Pedigrí inteligente, informes anuales completos, almacenamiento ampliado y herramientas estratégicas."></i></div><div class="card-subtitle">Rendimiento máximo.</div><div class="card-body">Automatización avanzada, almacenamiento ampliado y herramientas premium como <strong>Pedigrí inteligente</strong>, <strong>informes anuales completos</strong> y control total genealógico.</div><div class="card-footer"><stripe-buy-button buy-button-id="buy_btn_1TiP5TAMpjQA7o9hIIqHE48m" publishable-key="pk_live_51TiKYoAMpjQA7o9hlAxNxm9gZq9MXqQrb0qXfErbk0IypthR1qRCQjWROWd38LkuFPKVTQs3sWjSXiBzmK2HSjBb00IJuS9HqD"></stripe-buy-button></div></div></div></div><script async src="https://js.stripe.com/v3/buy-button.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script><script src="https://accounts.google.com/gsi/client" async defer></script><script>
   function abrirVentanaRegistro(){window.open("https://forms.gle/FnmNY8HFqmM2JvV8","registroPopup","width=auto,height=auto,resizable=yes,scrollbars=yes")}
-  window.onload=function(){google.accounts.id.initialize({client_id:"839165918275-r1s1cvia9uhp843u6hcic91sntasd1q6.apps.googleusercontent.com",callback:_0x5a2d,context:"signin",ux_mode:"popup",auto_select:true});google.accounts.id.renderButton(document.getElementById("buttonDiv"),{theme:"outline",size:"large",text:"signin_with",shape:"rectangular"});google.accounts.id.prompt()};
-  async function _0x5a2d(_0x4b1a){try{const token=_0x4b1a.credential.split(".")[1];const base64=token.replace(/-/g,"+").replace(/_/g,"/");const jsonPayload=decodeURIComponent(atob(base64).split("").map(function(c){return"%"+("00"+c.charCodeAt(0).toString(16)).slice(-2)}).join(""));const user=JSON.parse(jsonPayload);const email=user.email;console.log("Identidad verificada:",email);document.getElementById("googleAuthBox").classList.add("hidden");await _0x2c9f(email)}catch(e){console.error(e);_0x7b1e("not_registered")}}
-  async function _0x2c9f(_0x14ea){const db="columbanotebook";const url=`https://firestore.googleapis.com/v1/projects/${db}/databases/(default)/documents/usuario_autorizados/${encodeURIComponent(_0x14ea.trim().toLowerCase())}`;try{const res=await fetch(url);if(res.status===404){_0x7b1e("not_registered");return}if(!res.ok)throw new Error();const data=await res.json();const fields=data.fields;if(!fields){_0x7b1e("not_registered");return}const estado=fields.estado&&fields.estado.stringValue?fields.estado.stringValue.trim().toLowerCase():"";let formattedDate="";let expDate=null;if(fields.fec_vence&&fields.fec_vence.timestampValue){expDate=new Date(fields.fec_vence.timestampValue);if(!isNaN(expDate.getTime())){const d=String(expDate.getDate()).padStart(2,"0");const m=String(expDate.getMonth()+1).padStart(2,"0");const y=expDate.getFullYear();const h=String(expDate.getHours()).padStart(2,"0");const min=String(expDate.getMinutes()).padStart(2,"0");const s=String(expDate.getSeconds()).padStart(2,"0");formattedDate=`${d}/${m}/${y} ${h}:${min}:${s}`}}const payload={estado:estado,fec_vence:formattedDate,fec_vence_obj:expDate};_0x7b1e("registered",payload)}catch(e){_0x7b1e("not_registered")}}
-  function _0x7b1e(_0x39fa,_0x44ae=null){const cards=document.querySelectorAll(".plan-card");const actionBox=document.getElementById("registrationActionBox");const header=document.getElementById("plansHeader");const container=document.getElementById("plansContainer");const infoBox=document.getElementById("infoSuscripcion");const annualBtn=document.getElementById("btnPremiumAnual");header.classList.remove("hidden");container.classList.remove("hidden");actionBox.style.display="none";infoBox.style.display="none";if(_0x39fa==="admin"){cards.forEach(c=>{c.classList.remove("blocked");c.style.pointerEvents="auto"});if(annualBtn){annualBtn.style.pointerEvents="auto";annualBtn.style.opacity="1";annualBtn.style.filter="none"}infoBox.innerHTML=`<p style="margin:0; font-size:0.95rem; line-height:1.5;"><strong>Modo Administrador:</strong> Acceso total concedido.</p>`;infoBox.style.display="block";return}if(_0x39fa==="not_registered"){cards.forEach(c=>c.classList.add("blocked"));header.classList.add("hidden");container.classList.add("hidden");actionBox.innerHTML=`<h2>Acceso restringido</h2><p>Tu correo no está registrado.<br>Por favor, realiza tu registro.</p><button class="btn-columba" onclick="abrirVentanaRegistro()">Gestionar Acceso</button>`;actionBox.style.display="block";return}if(_0x39fa==="registered"&&_0x44ae){const estado=_0x44ae.estado?_0x44ae.estado:"";const fVence=_0x44ae.fec_vence||"";let habilitarCompras=false;let msg="";if(estado!=="active"){habilitarCompras=true;msg=`<strong>Estado de Cuenta:</strong> Inactivo / Vencido (Vencimiento anterior: ${fVence||'Ninguno'}). Elige un plan a continuación para renovar tu suscripción.`;infoBox.style.background="#fff3cd";infoBox.style.color="#856404";infoBox.style.border="1px solid #ffeeba"}else{let daysLeft=999;if(_0x44ae.fec_vence_obj&&!isNaN(_0x44ae.fec_vence_obj.getTime())){const hoy=new Date();const vence=new Date(_0x44ae.fec_vence_obj);hoy.setHours(0,0,0,0);vence.setHours(0,0,0,0);daysLeft=Math.ceil((vence-hoy)/(1000*60*60*24))}if(daysLeft<=3){habilitarCompras=true;msg=`<strong>Suscripción Activa:</strong> Tu cuenta vence pronto el ${fVence} (Te quedan ${daysLeft} días). Tienes permitido realizar tu renovación anticipada seleccionando un plan.`;infoBox.style.background="#e8f0fe";infoBox.style.color="#1a73e8";infoBox.style.border="1px solid #c2e7ff"}else{habilitarCompras=false;msg=`<strong>Suscripción Activa:</strong> Tu cuenta se encuentra vigente hasta el ${fVence}. No necesitas adquirir otro plan por ahora. Los botones de compra se habilitarán automáticamente cuando falten 3 días o menos para tu vencimiento.`;infoBox.style.background="#d4edda";infoBox.style.color="#155724";infoBox.style.border="1px solid #c3e6cb"}}infoBox.innerHTML=`<p style="margin:0; font-size:0.95rem; line-height:1.5;">${msg}</p>`;infoBox.style.display="block";if(habilitarCompras){cards.forEach(c=>{c.classList.remove("blocked");c.style.pointerEvents="auto"});if(annualBtn){annualBtn.style.pointerEvents="auto";annualBtn.style.opacity="1";annualBtn.style.filter="none"}}else{cards.forEach(c=>{c.classList.add("blocked");c.style.pointerEvents="none"});if(annualBtn){annualBtn.style.pointerEvents="none";annualBtn.style.opacity="0.4";annualBtn.style.filter="grayscale(100%)"}}}}}
+  
+  window.onload = function() {
+    google.accounts.id.initialize({
+      client_id: "839165918275-r1s1cvia9uhp843u6hcic91sntasd1q6.apps.googleusercontent.com",
+      callback: procesarAutenticacionGoogle,
+      context: "signin",
+      ux_mode: "popup",
+      auto_select: true
+    });
+    google.accounts.id.renderButton(document.getElementById("buttonDiv"), {
+      theme: "outline",
+      size: "large",
+      text: "signin_with",
+      shape: "rectangular"
+    });
+    google.accounts.id.prompt();
+  };
+
+  async function procesarAutenticacionGoogle(respuestaAuth) {
+    try {
+      const token = respuestaAuth.credential.split(".")[1];
+      const base64 = token.replace(/-/g, "+").replace(/_/g, "/");
+      const jsonPayload = decodeURIComponent(atob(base64).split("").map(function(c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(""));
+      
+      const usuarioObj = JSON.parse(jsonPayload);
+      const emailUsuario = usuarioObj.email;
+      
+      if (!emailUsuario) {
+        throw new Error("No se pudo obtener el email");
+      }
+      
+      console.log("Identidad verificada exitosamente:", emailUsuario);
+      document.getElementById("googleAuthBox").classList.add("hidden");
+      await consultarPermisosFirestore(emailUsuario);
+    } catch (error) {
+      console.error("Error en la autenticación:", error);
+      actualizarInterfazEstado("not_registered");
+    }
+  }
+
+  async function consultarPermisosFirestore(correo) {
+    const databaseName = "columbanotebook";
+    const cleanEmail = correo.trim().toLowerCase();
+    const endpointUrl = `https://firestore.googleapis.com/v1/projects/${databaseName}/databases/(default)/documents/usuario_autorizados/${encodeURIComponent(cleanEmail)}`;
+    
+    try {
+      const respuestaFetch = await fetch(endpointUrl);
+      
+      if (respuestaFetch.status === 404) {
+        actualizarInterfazEstado("not_registered");
+        return;
+      }
+      if (!respuestaFetch.ok) {
+        throw new Error("Error en la respuesta del servidor");
+      }
+      
+      const documentoData = await respuestaFetch.json();
+      const campos = documentoData.fields;
+      
+      if (!campos) {
+        actualizarInterfazEstado("not_registered");
+        return;
+      }
+      
+      // Control de campos robusto contra nulos o estructuras inesperadas
+      const estadoSuscripcion = campos.estado && campos.estado.stringValue ? campos.estado.stringValue.trim().toLowerCase() : "";
+      
+      let fechaFormateadaTexto = "";
+      let objetoFechaVencimiento = null;
+      
+      if (campos.fec_vence && campos.fec_vence.timestampValue) {
+        objetoFechaVencimiento = new Date(campos.fec_vence.timestampValue);
+        if (!isNaN(objetoFechaVencimiento.getTime())) {
+          const dia = String(objetoFechaVencimiento.getDate()).padStart(2, "0");
+          const mes = String(objetoFechaVencimiento.getMonth() + 1).padStart(2, "0");
+          const anio = objetoFechaVencimiento.getFullYear();
+          const hora = String(objetoFechaVencimiento.getHours()).padStart(2, "0");
+          const minutos = String(objetoFechaVencimiento.getMinutes()).padStart(2, "0");
+          const segundos = String(objetoFechaVencimiento.getSeconds()).padStart(2, "0");
+          fechaFormateadaTexto = `${dia}/${mes}/${anio} ${hora}:${minutos}:${segundos}`;
+        }
+      }
+      
+      const datosProcesados = {
+        estado: estadoSuscripcion,
+        fec_vence: fechaFormateadaTexto,
+        fec_vence_obj: objetoFechaVencimiento
+      };
+      
+      actualizarInterfazEstado("registered", datosProcesados);
+    } catch (error) {
+      console.error("Error consultando la base de datos:", error);
+      actualizarInterfazEstado("not_registered");
+    }
+  }
+
+  function actualizarInterfazEstado(estadoFlujo, metadatos = null) {
+    const listadoTarjetas = document.querySelectorAll(".plan-card");
+    const contenedorAccion = document.getElementById("registrationActionBox");
+    const headerPagina = document.getElementById("plansHeader");
+    const contenedorPlanes = document.getElementById("plansContainer");
+    const cajaInformacion = document.getElementById("infoSuscripcion");
+    const botonAnualPremium = document.getElementById("btnPremiumAnual");
+    
+    // Forzar reseteo visual base seguro
+    headerPagina.classList.remove("hidden");
+    contenedorPlanes.classList.remove("hidden");
+    contenedorAccion.style.display = "none";
+    cajaInformacion.style.display = "none";
+    
+    if (estadoFlujo === "not_registered") {
+      listadoTarjetas.forEach(tarjeta => tarjeta.classList.add("blocked"));
+      headerPagina.classList.add("hidden");
+      contenedorPlanes.classList.add("hidden");
+      
+      contenedorAccion.innerHTML = `<h2>Acceso restringido</h2><p>Tu correo no está registrado.<br>Por favor, realiza tu registro para continuar.</p><button class="btn-columba" onclick="abrirVentanaRegistro()">Gestionar Acceso</button>`;
+      contenedorAccion.style.display = "block";
+      return;
+    }
+    
+    if (estadoFlujo === "registered" && metadatos) {
+      const condicionEstado = metadatos.estado ? metadatos.estado : "";
+      const textoVencimiento = metadatos.fec_vence || "";
+      let permitirComprasStripe = false;
+      let mensajeInformativoHtml = "";
+      
+      if (condicionEstado !== "active") {
+        permitirComprasStripe = true;
+        mensajeInformativoHtml = `<strong>Estado de Cuenta:</strong> Inactivo / Vencido (Vencimiento anterior: ${textoVencimiento || 'Ninguno'}). Elige un plan a continuación para renovar tu suscripción.`;
+        cajaInformacion.style.background = "#fff3cd";
+        cajaInformacion.style.color = "#856404";
+        cajaInformacion.style.border = "1px solid #ffeeba";
+      } else {
+        let diasRestantesSuscripcion = 999;
+        if (metadatos.fec_vence_obj && !isNaN(metadatos.fec_vence_obj.getTime())) {
+          const tiempoActual = new Date();
+          const tiempoVence = new Date(metadatos.fec_vence_obj);
+          tiempoActual.setHours(0,0,0,0);
+          tiempoVence.setHours(0,0,0,0);
+          diasRestantesSuscripcion = Math.ceil((tiempoVence - tiempoActual) / (1000 * 60 * 60 * 24));
+        }
+        
+        if (diasRestantesSuscripcion <= 3) {
+          permitirComprasStripe = true;
+          mensajeInformativoHtml = `<strong>Suscripción Activa:</strong> Tu cuenta vence pronto el ${textoVencimiento} (Te quedan ${diasRestantesSuscripcion} días). Tienes permitido realizar tu renovación anticipada seleccionando un plan.`;
+          cajaInformacion.style.background = "#e8f0fe";
+          cajaInformacion.style.color = "#1a73e8";
+          cajaInformacion.style.border = "1px solid #c2e7ff";
+        } else {
+          permitirComprasStripe = false;
+          mensajeInformativoHtml = `<strong>Suscripción Activa:</strong> Tu cuenta se encuentra vigente hasta el ${textoVencimiento}. No necesitas adquirir otro plan por ahora. Los botones de compra se habilitarán automáticamente cuando falten 3 días o menos para tu vencimiento.`;
+          cajaInformacion.style.background = "#d4edda";
+          cajaInformacion.style.color = "#155724";
+          cajaInformacion.style.border = "1px solid #c3e6cb";
+        }
+      }
+      
+      cajaInformacion.innerHTML = `<p style="margin:0; font-size:0.95rem; line-height:1.5;">${mensajeInformativoHtml}</p>`;
+      cajaInformacion.style.display = "block";
+      
+      if (permitirComprasStripe) {
+        listadoTarjetas.forEach(tarjeta => {
+          tarjeta.classList.remove("blocked");
+          tarjeta.style.pointerEvents = "auto";
+        });
+        if (botonAnualPremium) {
+          botonAnualPremium.style.pointerEvents = "auto";
+          botonAnualPremium.style.opacity = "1";
+          botonAnualPremium.style.filter = "none";
+        }
+      } else {
+        listadoTarjetas.forEach(tarjeta => {
+          tarjeta.classList.add("blocked");
+          tarjeta.style.pointerEvents = "none";
+        });
+        if (botonAnualPremium) {
+          botonAnualPremium.style.pointerEvents = "none";
+          botonAnualPremium.style.opacity = "0.4";
+          botonAnualPremium.style.filter = "grayscale(100%)";
+        }
+      }
+    }
+  }
 </script></body></html>
