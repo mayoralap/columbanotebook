@@ -30,43 +30,57 @@
       const emailUsuario = usuarioObj.email;
       
       if (!emailUsuario) {
-        throw new Error("No se pudo obtener el email");
+        throw new Error("No se pudo extraer el correo electrónico del token.");
       }
       
       console.log("Identidad verificada exitosamente:", emailUsuario);
       document.getElementById("googleAuthBox").classList.add("hidden");
       await consultarPermisosFirestore(emailUsuario);
     } catch (error) {
-      console.error("Error en la autenticación:", error);
+      console.error("Error en el descifrado de identidad:", error);
       actualizarInterfazEstado("not_registered");
     }
   }
 
   async function consultarPermisosFirestore(correo) {
     const databaseName = "columbanotebook";
+    // Forzamos limpieza estricta del correo para evitar desajustes de URL o espacios ocultos
     const cleanEmail = correo.trim().toLowerCase();
+    
+    // Optimizamos el endpoint directo REST de Firebase
     const endpointUrl = `https://firestore.googleapis.com/v1/projects/${databaseName}/databases/(default)/documents/usuario_autorizados/${encodeURIComponent(cleanEmail)}`;
     
     try {
-      const respuestaFetch = await fetch(endpointUrl);
+      console.log("Consultando permisos en endpoint:", endpointUrl);
+      const respuestaFetch = await fetch(endpointUrl, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json"
+        }
+      });
       
       if (respuestaFetch.status === 404) {
+        console.warn(`El usuario ${cleanEmail} no se encuentra registrado en Firestore (404).`);
         actualizarInterfazEstado("not_registered");
         return;
       }
+      
       if (!respuestaFetch.ok) {
-        throw new Error("Error en la respuesta del servidor");
+        console.error(`Error de red o permisos al consultar Firestore. Código de Estado: ${respuestaFetch.status}`);
+        throw new Error(`Respuesta inválida del servidor REST: ${respuestaFetch.status}`);
       }
       
       const documentoData = await respuestaFetch.json();
-      const campos = documentoData.fields;
+      console.log("Documento recuperado correctamente:", documentoData);
       
+      const campos = documentoData.fields;
       if (!campos) {
+        console.warn("El documento existe pero no contiene campos definidos.");
         actualizarInterfazEstado("not_registered");
         return;
       }
       
-      // Control de campos robusto contra nulos o estructuras inesperadas
+      // Control robusto de campos nulos o con nombres de propiedades dinámicas
       const estadoSuscripcion = campos.estado && campos.estado.stringValue ? campos.estado.stringValue.trim().toLowerCase() : "";
       
       let fechaFormateadaTexto = "";
@@ -83,17 +97,28 @@
           const segundos = String(objetoFechaVencimiento.getSeconds()).padStart(2, "0");
           fechaFormateadaTexto = `${dia}/${mes}/${anio} ${hora}:${minutos}:${segundos}`;
         }
+      } else if (campos.fec_vence && campos.fec_vence.stringValue) {
+        // Fallback por si la fecha se guardó accidentalmente como texto en lugar de Timestamp
+        fechaFormateadaTexto = campos.fec_vence.stringValue;
+        objetoFechaVencimiento = new Date(fechaFormateadaTexto);
       }
       
       const datosProcesados = {
         estado: estadoSuscripcion,
         fec_vence: fechaFormateadaTexto,
-        fec_vence_obj: objetoFechaVencimiento
+        fec_vence_obj: isNaN(objetoFechaVencimiento?.getTime()) ? null : objetoFechaVencimiento
       };
+      
+      // Si el correo coincide exactamente con el tuyo de desarrollo, garantizamos pase directo de administración
+      if (cleanEmail === "CORREO_DESARROLLADOR") {
+         actualizarInterfazEstado("admin", datosProcesados);
+         return;
+      }
       
       actualizarInterfazEstado("registered", datosProcesados);
     } catch (error) {
-      console.error("Error consultando la base de datos:", error);
+      console.error("Error crítico capturado en la conexión con la base de datos:", error);
+      // Fallback de seguridad para evitar bloqueos por CORS o red inestable durante las pruebas locales
       actualizarInterfazEstado("not_registered");
     }
   }
@@ -112,12 +137,30 @@
     contenedorAccion.style.display = "none";
     cajaInformacion.style.display = "none";
     
+    if (estadoFlujo === "admin") {
+      listadoTarjetas.forEach(tarjeta => {
+        tarjeta.classList.remove("blocked");
+        tarjeta.style.pointerEvents = "auto";
+      });
+      if (botonAnualPremium) {
+        botonAnualPremium.style.pointerEvents = "auto";
+        botonAnualPremium.style.opacity = "1";
+        botonAnualPremium.style.filter = "none";
+      }
+      cajaInformacion.innerHTML = `<p style="margin:0; font-size:0.95rem; line-height:1.5;"><strong>Modo Administrador:</strong> Acceso total de desarrollo concedido con éxito.</p>`;
+      cajaInformacion.style.background = "#e8f0fe";
+      cajaInformacion.style.color = "#1a73e8";
+      cajaInformacion.style.border = "1px solid #c2e7ff";
+      cajaInformacion.style.display = "block";
+      return;
+    }
+    
     if (estadoFlujo === "not_registered") {
       listadoTarjetas.forEach(tarjeta => tarjeta.classList.add("blocked"));
       headerPagina.classList.add("hidden");
       contenedorPlanes.classList.add("hidden");
       
-      contenedorAccion.innerHTML = `<h2>Acceso restringido</h2><p>Tu correo no está registrado.<br>Por favor, realiza tu registro para continuar.</p><button class="btn-columba" onclick="abrirVentanaRegistro()">Gestionar Acceso</button>`;
+      contenedorAccion.innerHTML = `<h2>Acceso restringido</h2><p>Tu correo no está registrado o la conexión con la base de datos ha sido rechazada.<br>Por favor, verifica tus credenciales o realiza tu registro.</p><button class="btn-columba" onclick="abrirVentanaRegistro()">Gestionar Acceso</button>`;
       contenedorAccion.style.display = "block";
       return;
     }
