@@ -44,45 +44,40 @@
 
   async function consultarPermisosFirestore(correo) {
     const databaseName = "columbanotebook";
-    // Forzamos limpieza estricta del correo para evitar desajustes de URL o espacios ocultos
     const cleanEmail = correo.trim().toLowerCase();
-    
-    // Optimizamos el endpoint directo REST de Firebase
     const endpointUrl = `https://firestore.googleapis.com/v1/projects/${databaseName}/databases/(default)/documents/usuario_autorizados/${encodeURIComponent(cleanEmail)}`;
     
     try {
       console.log("Consultando permisos en endpoint:", endpointUrl);
       const respuestaFetch = await fetch(endpointUrl, {
         method: "GET",
-        headers: {
-          "Accept": "application/json"
-        }
+        headers: { "Accept": "application/json" }
       });
       
       if (respuestaFetch.status === 404) {
         console.warn(`El usuario ${cleanEmail} no se encuentra registrado en Firestore (404).`);
+        // Bypass de emergencia para ti durante pruebas de desarrollo
+        if (cleanEmail === "CORREO_DESARROLLADOR") {
+           actualizarInterfazEstado("admin", { estado: "active" });
+           return;
+        }
         actualizarInterfazEstado("not_registered");
         return;
       }
       
       if (!respuestaFetch.ok) {
-        console.error(`Error de red o permisos al consultar Firestore. Código de Estado: ${respuestaFetch.status}`);
         throw new Error(`Respuesta inválida del servidor REST: ${respuestaFetch.status}`);
       }
       
       const documentoData = await respuestaFetch.json();
-      console.log("Documento recuperado correctamente:", documentoData);
-      
       const campos = documentoData.fields;
+      
       if (!campos) {
-        console.warn("El documento existe pero no contiene campos definidos.");
         actualizarInterfazEstado("not_registered");
         return;
       }
       
-      // Control robusto de campos nulos o con nombres de propiedades dinámicas
       const estadoSuscripcion = campos.estado && campos.estado.stringValue ? campos.estado.stringValue.trim().toLowerCase() : "";
-      
       let fechaFormateadaTexto = "";
       let objetoFechaVencimiento = null;
       
@@ -98,7 +93,6 @@
           fechaFormateadaTexto = `${dia}/${mes}/${anio} ${hora}:${minutos}:${segundos}`;
         }
       } else if (campos.fec_vence && campos.fec_vence.stringValue) {
-        // Fallback por si la fecha se guardó accidentalmente como texto en lugar de Timestamp
         fechaFormateadaTexto = campos.fec_vence.stringValue;
         objetoFechaVencimiento = new Date(fechaFormateadaTexto);
       }
@@ -109,7 +103,6 @@
         fec_vence_obj: isNaN(objetoFechaVencimiento?.getTime()) ? null : objetoFechaVencimiento
       };
       
-      // Si el correo coincide exactamente con el tuyo de desarrollo, garantizamos pase directo de administración
       if (cleanEmail === "CORREO_DESARROLLADOR") {
          actualizarInterfazEstado("admin", datosProcesados);
          return;
@@ -117,8 +110,14 @@
       
       actualizarInterfazEstado("registered", datosProcesados);
     } catch (error) {
-      console.error("Error crítico capturado en la conexión con la base de datos:", error);
-      // Fallback de seguridad para evitar bloqueos por CORS o red inestable durante las pruebas locales
+      console.error("Error capturado en la conexión (CORS o Red):", error);
+      
+      // MECANISMO DE RESPALDO: Si eres tú testeando localmente y la base de datos rechaza la llamada, te da acceso de administrador.
+      if (cleanEmail === "CORREO_DESARROLLADOR") {
+         console.log("Mecanismo de rescate activado para el Desarrollador.");
+         actualizarInterfazEstado("admin", { estado: "active", fec_vence: "Modo Local" });
+         return;
+      }
       actualizarInterfazEstado("not_registered");
     }
   }
@@ -131,7 +130,6 @@
     const cajaInformacion = document.getElementById("infoSuscripcion");
     const botonAnualPremium = document.getElementById("btnPremiumAnual");
     
-    // Forzar reseteo visual base seguro
     headerPagina.classList.remove("hidden");
     contenedorPlanes.classList.remove("hidden");
     contenedorAccion.style.display = "none";
@@ -147,7 +145,7 @@
         botonAnualPremium.style.opacity = "1";
         botonAnualPremium.style.filter = "none";
       }
-      cajaInformacion.innerHTML = `<p style="margin:0; font-size:0.95rem; line-height:1.5;"><strong>Modo Administrador:</strong> Acceso total de desarrollo concedido con éxito.</p>`;
+      cajaInformacion.innerHTML = `<p style="margin:0; font-size:0.95rem; line-height:1.5;"><strong>Modo Administrador Local:</strong> Acceso de desarrollo concedido (Simulación o Bypass de red).</p>`;
       cajaInformacion.style.background = "#e8f0fe";
       cajaInformacion.style.color = "#1a73e8";
       cajaInformacion.style.border = "1px solid #c2e7ff";
