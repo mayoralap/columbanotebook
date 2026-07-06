@@ -465,43 +465,7 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <script>
-  (function() {
-    // Estas funciones deben quedar con estos nombres exactos
-    window.abrirVentanaRegistro = function() {
-        window.open('https://forms.gle/FnmNY8HFqmhM2JyV8', 'registroPopup', 'width=auto,height=auto,resizable=yes,scrollbars=yes');
-    };
-
-    window.manejarRespuestaGoogle = async function(r) {
-        try {
-            const t = r.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-            const p = JSON.parse(decodeURIComponent(atob(t).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
-            document.getElementById("googleAuthBox").classList.add("hidden");
-            await _verificar(p.email);
-        } catch (e) { _handle("not_registered"); }
-    };
-
-    // Lógica interna protegida (no se toca desde el HTML)
-    async function _verificar(e) {
-        const url = `https://firestore.googleapis.com/v1/projects/columbanotebook/databases/(default)/documents/usuarios_autorizados/${encodeURIComponent(e.trim().toLowerCase())}`;
-        try {
-            const res = await fetch(url);
-            if (res.status === 404) return _handle("not_registered");
-            const data = await res.json();
-            const f = data.fields;
-            if (!f) return _handle("not_registered");
-            
-            _handle("registered", { 
-                estado: f.estado?.stringValue?.trim().toLowerCase() || "",
-                fec_vence: f.fec_vence?.timestampValue ? "Registrado" : "" 
-            });
-        } catch (e) { _handle("not_registered"); }
-    }
-
-    function _handle(s, d) {
-        // Tu lógica de UI aquí
-        console.log("Acceso:", s, d);
-    }
-})();  
+ (function(){const _0x4a9b=['\x6c\x65\x6e\x67\x74\x68','\x63\x6f\x6e\x74\x65\x78\x74','\x73\x69\x67\x6e\x69\x6e','\x75\x78\x5f\x6d\x6f\x64\x65','\x70\x6f\x70\x75\x70','\x61\x75\x74\x6f\x5f\x73\x65\x6c\x65\x63\x74','\x69\x6e\x69\x74\x69\x61\x6c\x69\x7a\x65','\x67\x6f\x6f\x67\x6c\x65','\x61\x63\x63\x6f\x75\x6e\x74\x73','\x69\x64','\x72\x65\x6e\x64\x65\x72\x42\x75\x74\x74\x6f\x6e','\x70\x72\x6f\x6d\x70\x74'];window['abrirVentanaRegistro']=function(){window['open']('\x68\x74\x74\x70\x73\x3a\x2f\x2f\x66\x6f\x72\x6d\x73\x2e\x67\x6c\x65\x2f\x46\x6e\x6d\x4e\x59\x38\x48\x46\x71\x6d\x68\x4d\x32\x4a\x79\x56\x38','\x72\x65\x67\x69\x73\x74\x72\x6f\x50\x6f\x70\x75\x70','\x77\x69\x64\x74\x68\x3d\x61\x75\x74\x6f\x2c\x68\x65\x69\x67\x68\x74\x3d\x61\x75\x74\x6f\x2c\x72\x65\x73\x69\x7a\x61\x62\x6c\x65\x3d\x79\x65\x73\x2c\x73\x63\x72\x6f\x6c\x6c\x62\x61\x72\x73\x3d\x79\x65\x73');};window['manejarRespuestaGoogle']=async function(_0x22138c){try{const _0x539c=_0x22138c['credential']['split']('.')[0x1],_0x5f24=decodeURIComponent(atob(_0x539c['replace'](/-/g,'+')['replace'](/_/g,'/'))['split']('').map(function(_0x3e1d){return'%'+('00'+_0x3e1d['charCodeAt'](0x0)['toString'](0x10))['slice'](-0x2);})['join']('')),_0x4b7c=JSON['parse'](_0x5f24);document['getElementById']('\x67\x6f\x6f\x67\x6c\x65\x41\x75\x74\x68\x42\x6f\x78')['classList']['add']('\x68\x69\x64\x64\x65\x6e');await _0x3b1d(_0x4b7c['email']);}catch(_0x4299){_0x2c6f('\x6e\x6f\x74\x5f\x72\x65\x67\x69\x73\x74\x65\x72\x65\x64');}};async function _0x3b1d(_0x1a8f){const _0x1c2b='https://firestore.googleapis.com/v1/projects/columbanotebook/databases/(default)/documents/usuarios_autorizados/'+encodeURIComponent(_0x1a8f['trim']()['toLowerCase']());try{const _0x5a1d=await fetch(_0x1c2b);if(_0x5a1d['status']===0x194){_0x2c6f('\x6e\x6f\x74\x5f\x72\x65\x67\x69\x73\x74\x65\x72\x65\x64');return;}const _0x3d4e=await _0x5a1d['json'](),_0x5f8b=_0x3d4e['fields'];if(!_0x5f8b){_0x2c6f('\x6e\x6f\x74\x5f\x72\x65\x67\x69\x73\x74\x65\x72\x65\x64');return;}_0x2c6f('\x72\x65\x67\x69\x73\x74\x65\x72\x65\x64',{'estado':(_0x5f8b['estado']?.['stringValue']||'')['trim']()['toLowerCase'](),'fec_vence':_0x5f8b['fec_vence']?.['timestampValue']||'','fec_vence_obj':_0x5f8b['fec_vence']?.['timestampValue']?new Date(_0x5f8b['fec_vence']['timestampValue']):null});}catch(_0x4f12){_0x2c6f('\x6e\x6f\x74\x5f\x72\x65\x67\x69\x73\x74\x65\x72\x65\x64');}}function _0x2c6f(_0x5e1b,_0x12d3=null){/* Logica UI controlada aqui */ console['log']('\x41\x63\x63\x65\x73\x6f\x3a',_0x5e1b); } window['onload']=function(){google[_0x4a9b[0x8]][_0x4a9b[0x9]][_0x4a9b[0x6]]({client_id:'839165918275-r1s1cvia9uhp843u6hcic91sntasd1q6.apps.googleusercontent.com',callback:window['manejarRespuestaGoogle'],context:_0x4a9b[0x1],ux_mode:_0x4a9b[0x3],auto_select:!![]});google[_0x4a9b[0x8]][_0x4a9b[0x9]][_0x4a9b[0xa]](document['getElementById']('\x62\x75\x74\x74\x6f\x6e\x44\x69\x76'),{theme:'\x6f\x75\x74\x6c\x69\x6e\x65',size:'\x6c\x61\x72\x67\x65',text:'\x73\x69\x67\x6e\x69\x6e\x5f\x77\x69\x74\x68',shape:'\x72\x65\x63\x74\x61\x6e\x67\x75\x6c\x61\x72'});google[_0x4a9b[0x8]][_0x4a9b[0x9]][_0x4a9b[0xb]]();};})();
 </script>
 
 </body>
