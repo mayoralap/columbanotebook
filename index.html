@@ -470,7 +470,66 @@ function abrirVentanaRegistro(){window.open("https://forms.gle/FnmNY8HFqmhM2JyV8
 window.onload=function(){google.accounts.id.initialize({client_id:"839165918275-r1s1cvia9uhp843u6hcic91sntasd1q6.apps.googleusercontent.com",callback:manejarRespuestaGoogle,context:"signin",ux_mode:"popup",auto_select:!0});google.accounts.id.renderButton(document.getElementById("buttonDiv"),{theme:"outline",size:"large",text:"signin_with",shape:"rectangular"});google.accounts.id.prompt()};
 function manejarRespuestaGoogle(_r){try{const _b1=_r.credential.split('.')[1];const _b2=_b1.replace(/-/g,'+').replace(/_/g,'/');const _jp=decodeURIComponent(atob(_b2).split('').map(function(_c){return'%'+('00'+_c.charCodeAt(0).toString(16)).slice(-2)}).join(''));const _ou=JSON.parse(_jp);const _ev=_ou.email;document.getElementById("googleAuthBox").classList.add("hidden");ejecutarVerificacionDeAcceso(_ev)}catch(_e){handleAccess("not_registered")}}
 function handleAccess(_s,_u=null){const _c=document.querySelectorAll(".plan-card");const _a=document.getElementById("registrationActionBox");const _h=document.getElementById("plansHeader");const _cn=document.getElementById("plansContainer");const _i=document.getElementById("infoSuscripcion");const _bp=document.getElementById("btnPremiumAnual");_h.classList.remove("hidden");_cn.classList.remove("hidden");_a.style.display="none";_i.style.display="none";if(_s==="admin"){_c.forEach(_x=>{_x.classList.remove("blocked");_x.style.pointerEvents="auto"});if(_bp){_bp.style.pointerEvents="auto";_bp.style.opacity="1";_bp.style.filter="none"}_i.innerHTML='<p style="margin:0; font-size:0.95rem; line-height:1.5;"><strong>Modo Administrador:</strong> Acceso total de desarrollo concedido.</p>';_i.style.background="#e8f0fe";_i.style.color="#1a73e8";_i.style.border="1px solid #c2e7ff";_i.style.display="block";return}if(_s==="not_registered"){_c.forEach(_x=>_x.classList.add("blocked"));_h.classList.add("hidden");_cn.classList.add("hidden");_i.style.display="none";_a.innerHTML='<h2>Acceso restringido</h2><p>Tu correo electrónico no se encuentra registrado en nuestro sistema.<br>Por favor, realiza tu registro inicial para continuar.</p><button class="btn-columba" onclick="abrirVentanaRegistro()">Gestionar Acceso</button>';_a.style.display="block";return}if(_s==="registered"&&_u){const _e=_u.estado?_u.estado.trim().toLowerCase():"";const _f=_u.fec_vence||"";let _pc=!1;let _mi="";if(_e!=="active"){_pc=!0;_mi=`<strong>Estado de Cuenta:</strong> Inactivo / Vencido (Vencimiento anterior: ${_f||'Ninguno'}). Elige un plan a continuación para renovar tu suscripción.`;_i.style.background="#fff3cd";_i.style.color="#856404";_i.style.border="1px solid #ffeeba"}else{let _dr=999;if(_u.fec_vence_obj&&!isNaN(_u.fec_vence_obj.getTime())){const _hoy=new Date();const _fv=new Date(_u.fec_vence_obj);_hoy.setHours(0,0,0,0);_fv.setHours(0,0,0,0);const _dt=_fv-_hoy;_dr=Math.ceil(_dt/(1000*60*60*24))}if(_dr<=3){_pc=!0;_mi=`<strong>Suscripción Activa:</strong> Tu cuenta vence pronto el ${_f} (Te quedan ${_dr} días). Tienes permitido realizar tu renovación anticipada seleccionando un plan.`;_i.style.background="#e8f0fe";_i.style.color="#1a73e8";_i.style.border="1px solid #c2e7ff"}else{_pc=!1;_mi=`<strong>Suscripción Activa:</strong> Tu cuenta se encuentra vigente hasta el ${_f}. No necesitas adquirir otro plan por ahora. Los botones de compra se habilitarán automáticamente cuando falten 3 días o menos para tu vencimiento.`;_i.style.background="#d4edda";_i.style.color="#155724";_i.style.border="1px solid #c3e6cb"}}_i.innerHTML=`<p style="margin:0; font-size:0.95rem; line-height:1.5;">${_mi}</p>`;_i.style.display="block";if(_pc){_c.forEach(_x=>{_x.classList.remove("blocked");_x.style.pointerEvents="auto"});if(_bp){_bp.style.pointerEvents="auto";_bp.style.opacity="1";_bp.style.filter="none"}}else{_c.forEach(_x=>{_x.classList.add("blocked");_x.style.pointerEvents="none"});if(_bp){_bp.style.pointerEvents="none";_bp.style.opacity="0.4";_bp.style.filter="grayscale(100%)"}}}}
-async function ejecutarVerificacionDeAcceso(_em){const _uf=`https://firestore.googleapis.com/v1/projects/columbanotebook/databases/(default)/documents/usuarios_autorizados/${encodeURIComponent(_em.trim().toLowerCase())}`;try{const _r=await fetch(_uf);if(_r.status===404){handleAccess("not_registered");return}if(!_r.ok)throw new Error("E");const _d=await _r.json();const _f=_d.fields;if(!_f){handleAccess("not_registered");return}const _ef=_f.estado&&_f.estado.stringValue?_f.estado.stringValue.trim().toLowerCase():"";let _fvf="";let _fvo=null;if(_f.fec_vence&&_f.fec_vence.timestampValue){_fvo=new Date(_f.fec_vence.timestampValue);if(!isNaN(_fvo.getTime())){const _d=String(_fvo.getDate()).padStart(2,'0');const _m=String(_fvo.getMonth()+1).padStart(2,'0');const _a=_fvo.getFullYear();const _h=String(_fvo.getHours()).padStart(2,'0');const _min=String(_fvo.getMinutes()).padStart(2,'0');const _s=String(_fvo.getSeconds()).padStart(2,'0');_fvf=`${_d}/${_m}/${_a} ${_h}:${_min}:${_s}`}}const _ue={estado:_ef,fec_vence:_fvf,fec_vence_obj:_fvo};handleAccess("registered",_ue)}catch(_er){handleAccess("not_registered")}}
+
+async function ejecutarVerificacionDeAcceso(_em) {
+  const _cl = _em.trim().toLowerCase();
+
+  // Verificación 100% segura consultando al servidor de Google Apps Script
+  if (typeof google !== 'undefined' && google.script && google.script.run) {
+    google.script.run
+      .withSuccessHandler(function(respuesta) {
+        if (respuesta && respuesta.esAdmin) {
+          handleAccess("admin");
+          return;
+        }
+        consultarFirestoreClientes(_cl);
+      })
+      .withFailureHandler(function() {
+        consultarFirestoreClientes(_cl);
+      })
+      .verificarModoDesarrolladorSeguro();
+  } else {
+    // Si corre de forma completamente estática sin entorno Apps Script, procede con Firestore
+    consultarFirestoreClientes(_cl);
+  }
+}
+
+async function consultarFirestoreClientes(_cl) {
+  const _uf = `https://firestore.googleapis.com/v1/projects/columbanotebook/databases/(default)/documents/usuarios_autorizados/${encodeURIComponent(_cl)}`;
+  try {
+    const _r = await fetch(_uf);
+    if (_r.status === 404) {
+      handleAccess("not_registered");
+      return;
+    }
+    if (!_r.ok) throw new Error("E");
+    const _d = await _r.json();
+    const _f = _d.fields;
+    if (!_f) {
+      handleAccess("not_registered");
+      return;
+    }
+    const _ef = _f.estado && _f.estado.stringValue ? _f.estado.stringValue.trim().toLowerCase() : "";
+    let _fvf = "";
+    let _fvo = null;
+    if (_f.fec_vence && _f.fec_vence.timestampValue) {
+      _fvo = new Date(_f.fec_vence.timestampValue);
+      if (!isNaN(_fvo.getTime())) {
+        const _d = String(_fvo.getDate()).padStart(2, '0');
+        const _m = String(_fvo.getMonth() + 1).padStart(2, '0');
+        const _a = _fvo.getFullYear();
+        const _h = String(_fvo.getHours()).padStart(2, '0');
+        const _min = String(_fvo.getMinutes()).padStart(2, '0');
+        const _s = String(_fvo.getSeconds()).padStart(2, '0');
+        _fvf = `${_d}/${_m}/${_a} ${_h}:${_min}:${_s}`;
+      }
+    }
+    const _ue = { estado: _ef, fec_vence: _fvf, fec_vence_obj: _fvo };
+    handleAccess("registered", _ue);
+  } catch (_er) {
+    handleAccess("not_registered");
+  }
+}
 </script>
 
 </body>
