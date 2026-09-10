@@ -639,7 +639,7 @@
     }
 
     async function ejecutarVerificacionDeAcceso(emailLimpio) {
-        console.log("DEBUG: Consultando Firestore en tiempo real para el usuario:", emailLimpio);
+        console.log("DEBUG: Consultando DB en tiempo real para el usuario:", emailLimpio);
         
         const projectId = "columbanotebook";
         // Petición directa a la API REST de Firestore (evita por completo la caché de Sheets)
@@ -696,7 +696,7 @@
             handleAccess("registered", usuarioEncontrado);
 
         } catch (error) {
-            console.error("DEBUG: Error crítico en fetch de Firestore:", error.message);
+            console.error("DEBUG: Error crítico en fetch de DB:", error.message);
             handleAccess("not_registered");
         }
     }
