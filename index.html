@@ -325,13 +325,10 @@
     }
 
     @keyframes sparkle {
-
-      0%,
-      100% {
+      0%, 100% {
         opacity: 0;
         transform: scale(0.5) rotate(0deg);
       }
-
       50% {
         opacity: 1;
         transform: scale(1.2) rotate(20deg);
@@ -465,12 +462,8 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <script>
-    function getEndpoint() {
-        const p1 = "https://docs.google.com/spreadsheets/d/";
-        const p2 = "1Vf6YTKbGRR2LsEJ2JKJdrCQLY9o57z5Vh9O7IvJ21qE";
-        const p3 = "/gviz/tq?tqx=out:csv&sheet=Auth";
-        return p1 + p2 + p3;
-    }
+    // URL oficial de tu API desplegada en Google Apps Script
+    const API_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbw2sN-uYiDZAKCYIiE-t6w2zT7_jptXkgzqjbEWjMrkJJveFx79MYoqMLnaB5Uo-MCG/exec";
 
     function abrirVentanaRegistro() {
         window.open('https://forms.gle/FnmNY8HFqmhM2JyV8', 'registroPopup', 'width=auto,height=auto,resizable=yes,scrollbars=yes');
@@ -511,7 +504,7 @@
 
             console.log("INFORMÁTICA: Identidad verificada criptográficamente por Google:", emailVerificado);
             
-            // Ocultamos el prompt inicial de login e iniciamos la verificación en la hoja de cálculo
+            // Ocultamos el prompt inicial de login e iniciamos la verificación con el backend en Apps Script
             document.getElementById("googleAuthBox").classList.add("hidden");
             ejecutarVerificacionDeAcceso(emailVerificado);
 
@@ -638,69 +631,67 @@
         }
     }
 
+    /**
+     * Realiza la consulta a la API REST alojada en Google Apps Script.
+     * @param {string} emailLimpio - Correo verificado por Google Auth
+     */
     async function ejecutarVerificacionDeAcceso(emailLimpio) {
-        console.log("DEBUG: Consultando Firestore en tiempo real para el usuario:", emailLimpio);
+        console.log("DEBUG: Consultando API de Apps Script para el usuario:", emailLimpio);
         
-        const projectId = "columbanotebook";
-        // Petición directa a la API REST de Firestore (evita por completo la caché de Sheets)
-        const urlFirestore = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/usuarios_autorizados/${encodeURIComponent(emailLimpio.trim().toLowerCase())}`;
+        const urlConsulta = `${API_APPS_SCRIPT}?email=${encodeURIComponent(emailLimpio.trim().toLowerCase())}`;
 
         try {
-            const respuesta = await fetch(urlFirestore);
+            const respuesta = await fetch(urlConsulta);
             
-            if (respuesta.status === 404) {
-                console.warn("DEBUG: Usuario no registrado en Firestore.");
+            if (!respuesta.ok) throw new Error("Error de respuesta en el servidor API.");
+
+            const data = await respuesta.json();
+
+            if (data.status === "not_registered") {
+                console.warn("DEBUG: Usuario no registrado en el sistema.");
                 handleAccess("not_registered");
                 return;
             }
 
-            if (!respuesta.ok) throw new Error("Error de conexión con el backend de Firestore.");
-
-            const datosUsuario = await respuesta.json();
-            const campos = datosUsuario.fields;
-
-            if (!campos) {
-                handleAccess("not_registered");
-                return;
-            }
-
-            // Extracción limpia de las propiedades stringValue y timestampValue
-            const estadoFila = campos.estado && campos.estado.stringValue ? campos.estado.stringValue.trim().toLowerCase() : "";
-            
-            let fechaVenceFormateada = "";
-            let fechaVenceObj = null;
-
-            if (campos.fec_vence && campos.fec_vence.timestampValue) {
-                // Parseo nativo del String ISO UTC que viene directo de Firebase
-                fechaVenceObj = new Date(campos.fec_vence.timestampValue);
+            if (data.status === "registered" && data.userData) {
+                const estadoFila = data.userData.estado ? data.userData.estado.trim().toLowerCase() : "";
                 
-                if (!isNaN(fechaVenceObj.getTime())) {
-                    const dia = String(fechaVenceObj.getDate()).padStart(2, '0');
-                    const mes = String(fechaVenceObj.getMonth() + 1).padStart(2, '0'); // Corrección mes base 0
-                    const anio = fechaVenceObj.getFullYear();
+                let fechaVenceFormateada = "";
+                let fechaVenceObj = null;
+
+                if (data.userData.timestampISO) {
+                    fechaVenceObj = new Date(data.userData.timestampISO);
                     
-                    const horas = String(fechaVenceObj.getHours()).padStart(2, '0');
-                    const minutos = String(fechaVenceObj.getMinutes()).padStart(2, '0');
-                    const segundos = String(fechaVenceObj.getSeconds()).padStart(2, '0');
-                    
-                    fechaVenceFormateada = `${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}`;
+                    if (!isNaN(fechaVenceObj.getTime())) {
+                        const dia = String(fechaVenceObj.getDate()).padStart(2, '0');
+                        const mes = String(fechaVenceObj.getMonth() + 1).padStart(2, '0');
+                        const anio = fechaVenceObj.getFullYear();
+                        
+                        const horas = String(fechaVenceObj.getHours()).padStart(2, '0');
+                        const minutos = String(fechaVenceObj.getMinutes()).padStart(2, '0');
+                        const segundos = String(fechaVenceObj.getSeconds()).padStart(2, '0');
+                        
+                        fechaVenceFormateada = `${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}`;
+                    }
                 }
+
+                const usuarioEncontrado = {
+                    estado: estadoFila,
+                    fec_vence: fechaVenceFormateada,
+                    fec_vence_obj: fechaVenceObj
+                };
+
+                handleAccess("registered", usuarioEncontrado);
+            } else {
+                handleAccess("not_registered");
             }
-
-            const usuarioEncontrado = {
-                estado: estadoFila,
-                fec_vence: fechaVenceFormateada,
-                fec_vence_obj: fechaVenceObj // Enviamos el objeto Date real para cálculos matemáticos en handleAccess
-            };
-
-            handleAccess("registered", usuarioEncontrado);
 
         } catch (error) {
-            console.error("DEBUG: Error crítico en fetch de Firestore:", error.message);
+            console.error("DEBUG: Error crítico en fetch a la API de Apps Script:", error.message);
             handleAccess("not_registered");
         }
     }
-</script>
+  </script>
 
 </body>
 
