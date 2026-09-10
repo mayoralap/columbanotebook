@@ -649,12 +649,12 @@
             const respuesta = await fetch(urlFirestore);
             
             if (respuesta.status === 404) {
-                console.warn("DEBUG: Usuario no registrado en Firestore.");
+                console.warn("DEBUG: Usuario no registrado en DB.");
                 handleAccess("not_registered");
                 return;
             }
 
-            if (!respuesta.ok) throw new Error("Error de conexión con el backend de Firestore.");
+            if (!respuesta.ok) throw new Error("Error de conexión con el backend de DB.");
 
             const datosUsuario = await respuesta.json();
             const campos = datosUsuario.fields;
