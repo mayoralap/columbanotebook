@@ -462,14 +462,12 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <script>
-    // URL oficial de tu API desplegada en Google Apps Script
     const API_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbw2sN-uYiDZAKCYIiE-t6w2zT7_jptXkgzqjbEWjMrkJJveFx79MYoqMLnaB5Uo-MCG/exec";
 
     function abrirVentanaRegistro() {
         window.open('https://forms.gle/FnmNY8HFqmhM2JyV8', 'registroPopup', 'width=auto,height=auto,resizable=yes,scrollbars=yes');
     }
 
-    // Inicialización del servicio de Google Identity al cargar la ventana
     window.onload = function () {
         google.accounts.id.initialize({
             client_id: "839165918275-r1s1cvia9uhp843u6hcic91sntasd1q6.apps.googleusercontent.com", 
@@ -479,20 +477,16 @@
             auto_select: true 
         });
 
-        // Renderiza el botón visual nativo de Google
         google.accounts.id.renderButton(
             document.getElementById("buttonDiv"),
             { theme: "outline", size: "large", text: "signin_with", shape: "rectangular" }
         );
 
-        // Despliega el One Tap automático en la esquina si es posible
         google.accounts.id.prompt();
     };
 
-    // Callback ejecutado cuando el usuario se autentica exitosamente con Google
     function manejarRespuestaGoogle(response) {
         try {
-            // Un token JWT tiene 3 partes separadas por puntos. La segunda parte (índice 1) es el Payload base64
             const base64Url = response.credential.split('.')[1];
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
             const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
@@ -502,14 +496,10 @@
             const objetoUsuario = JSON.parse(jsonPayload);
             const emailVerificado = objetoUsuario.email;
 
-            console.log("INFORMÁTICA: Identidad verificada criptográficamente por Google:", emailVerificado);
-            
-            // Ocultamos el prompt inicial de login e iniciamos la verificación con el backend en Apps Script
             document.getElementById("googleAuthBox").classList.add("hidden");
             ejecutarVerificacionDeAcceso(emailVerificado);
 
         } catch (error) {
-            console.error("ERROR: No se pudo decodificar el token de Google:", error);
             handleAccess("not_registered");
         }
     }
@@ -522,7 +512,6 @@
         const infoBox = document.getElementById("infoSuscripcion");
         const btnPremium = document.getElementById("btnPremiumAnual");
 
-        // Activamos visibilidad estructural de contenedores
         header.classList.remove("hidden");
         container.classList.remove("hidden");
         actionBox.style.display = "none";
@@ -577,7 +566,6 @@
             } else {
                 let diasRestantes = 999;
                 
-                // CONTROL ANALÍTICO: Usamos el objeto Date nativo que preservamos para calcular los días restantes de forma exacta
                 if (userData.fec_vence_obj && !isNaN(userData.fec_vence_obj.getTime())) {
                     const hoy = new Date();
                     const fechaVencimiento = new Date(userData.fec_vence_obj);
@@ -631,24 +619,17 @@
         }
     }
 
-    /**
-     * Realiza la consulta a la API REST alojada en Google Apps Script.
-     * @param {string} emailLimpio - Correo verificado por Google Auth
-     */
     async function ejecutarVerificacionDeAcceso(emailLimpio) {
-        console.log("DEBUG: Consultando API de Apps Script para el usuario:", emailLimpio);
-        
         const urlConsulta = `${API_APPS_SCRIPT}?email=${encodeURIComponent(emailLimpio.trim().toLowerCase())}`;
 
         try {
             const respuesta = await fetch(urlConsulta);
             
-            if (!respuesta.ok) throw new Error("Error de respuesta en el servidor API.");
+            if (!respuesta.ok) throw new Error();
 
             const data = await respuesta.json();
 
             if (data.status === "not_registered") {
-                console.warn("DEBUG: Usuario no registrado en el sistema.");
                 handleAccess("not_registered");
                 return;
             }
@@ -687,7 +668,6 @@
             }
 
         } catch (error) {
-            console.error("DEBUG: Error crítico en fetch a la API de Apps Script:", error.message);
             handleAccess("not_registered");
         }
     }
