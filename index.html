@@ -3,6 +3,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Columba Notebook – Planes de Suscripción</title>
   <link rel="stylesheet" href="./Columba Notebook – Planes de Suscripción_files/bootstrap-icons.min.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     :root {
       --color-primary: #1a73e8;
@@ -360,7 +361,6 @@
       </div>
     </div>
 
-    <!-- Se quita la clase hidden para que sea visible inicialmente -->
     <div id="googleAuthBox" class="google-auth-container">
       <img src="./Columba Notebook – Planes de Suscripción_files/ColumbaNotebook.png" alt="Logo Columba" style="width:100px; margin-bottom:20px;">
       <h2 style="font-size:1.5rem; color:#202124; margin:0 0 10px 0;">Verificación de Identidad</h2>
@@ -370,7 +370,6 @@
       <div id="buttonDiv"></div>
     </div>
 
-    <!-- Oculto inicialmente por defecto con style="display: none;" -->
     <div id="registrationActionBox" class="action-box" style="display: none;"></div>
 
     <div id="infoSuscripcion" class="info-suscripcion-box" style="display: none;"></div>
@@ -441,16 +440,18 @@ function abrirVentanaRegistro(){
 }
 
 window.onload = function() {
-  if (typeof google !== 'undefined' && google.accounts) {
+  if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
     google.accounts.id.initialize({
       client_id: "839165918275-r1s1cvia9uhp843u6hcic91sntasd1q6.apps.googleusercontent.com",
       callback: manejarRespuestaGoogle,
-      context: "signin",
-      ux_mode: "popup",
-      auto_select: true
+      auto_select: false,
+      use_fedcm_for_prompt: false
     });
-    google.accounts.id.renderButton(document.getElementById("buttonDiv"), { theme: "outline", size: "large", text: "signin_with", shape: "rectangular" });
-    google.accounts.id.prompt();
+    
+    google.accounts.id.renderButton(
+      document.getElementById("buttonDiv"),
+      { theme: "outline", size: "large", text: "signin_with", shape: "rectangular" }
+    );
   }
 };
 
